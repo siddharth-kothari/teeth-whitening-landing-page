@@ -8,13 +8,11 @@ import { textVariant, zoomIn, fadeIn } from "@/utils/motion";
 import ReCAPTCHA from "react-google-recaptcha";
 
 const Contact = () => {
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname] = useState("");
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
   const [aptDate, setAptDate] = useState("");
-  const [service, setService] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [hydrated, setHydrated] = useState(false);
   const [errors, setErrors] = useState<Errors>({});
@@ -22,13 +20,11 @@ const Contact = () => {
   const recaptcha = useRef<ReCAPTCHA>(null);
 
   interface Errors {
-    firstname?: string;
-    lastname?: string;
+    name?: string;
     email?: string;
     phone?: string;
     message?: string;
     aptDate?: string;
-    service?: string;
   }
 
   useEffect(() => {
@@ -53,15 +49,14 @@ const Contact = () => {
 
     // Validate form fields
     const validationErrors: Errors = {};
-    if (firstname.trim() === "") {
-      validationErrors.firstname = "First Name is required";
+    if (name.trim() === "") {
+      validationErrors.name = "First Name is required";
     }
-    if (lastname.trim() === "") {
-      validationErrors.lastname = "Last Name is required";
-    }
+
     if (email.trim() === "") {
       validationErrors.email = "Email is required";
     }
+
     if (phone.trim() === "") {
       validationErrors.phone = "Phone number is required";
     }
@@ -72,9 +67,6 @@ const Contact = () => {
 
     if (message.trim() === "") {
       validationErrors.message = "Message is required";
-    }
-    if (service.trim() === "") {
-      validationErrors.service = "Service is required";
     }
 
     if (Object.keys(validationErrors).length > 0) {
@@ -102,15 +94,12 @@ const Contact = () => {
 
     var msg =
       "Hello, I want to book an appointment.\n Details:\n Name: " +
-      firstname +
+      name +
       " " +
-      lastname +
       "\n Email: " +
       email +
       "\n Mobile No.: " +
       phone +
-      "\n Service: " +
-      service +
       "\n Appointment date: " +
       formattedDate +
       "\n Message: " +
@@ -143,7 +132,7 @@ const Contact = () => {
       //       "service_husnupj",
       //       "template_ydxe9p8",
       //       {
-      //         from_name: firstname + " " + lastname,
+      //         from_name: name + " " + lastname,
       //         to_name: "Glam2Door Support",
       //         from_email: email,
       //         to_email: "contact.glam2door@gmail.com",
@@ -225,7 +214,7 @@ const Contact = () => {
           your teeth whitening session today.
         </motion.p>
 
-        <div className="grid max-w-lg grid-cols-1 mx-auto lg:max-w-full lg:items-center lg:grid-cols-2 gap-y-6 mt-10">
+        <div className="grid max-w-lg grid-cols-1 mx-auto lg:max-w-full lg:items-center lg:grid-cols-2 gap-y-6 mt-10 border border-slate-800 p-5 rounded-xl">
           <motion.div
             variants={fadeIn("bottom", "spring", 0, 1)}
             whileInView="show"
@@ -233,34 +222,35 @@ const Contact = () => {
             viewport={{ once: true, amount: 0.25 }}
             className="relative"
           >
-            <Image className="w-full" src={contactImage} alt="" />
+            <Image className="w-full max-w-[90%]" src={contactImage} alt="" />
           </motion.div>
           <form
             onSubmit={handleSubmit}
-            className="lg:w-[100%] p-7 sm:max-w-[80%] mx-auto"
+            className="lg:w-[100%] sm:max-w-[80%] mx-auto"
           >
+            <p className="m-0 font-abril text-2xl mb-3 py-2">
+              Request Your Appointment
+            </p>
             <div className="block md:flex md:justify-between md:items-center md:gap-8">
               <div className="mb-4 w-full">
                 <label
-                  htmlFor="firstname"
+                  htmlFor="name"
                   className="block text-black font-manrope text-sm font-medium mb-2"
                 >
                   Name
                 </label>
                 <input
                   type="text"
-                  id="firstname"
-                  className={`w-full p-2 border-b bg-inherit placeholder:text-slate-500 text-black font-manrope outline-none ${
-                    errors.firstname ? "border-red-500" : "border-black"
+                  id="name"
+                  className={`w-full p-2 border rounded px-2 bg-inherit placeholder:text-slate-500 text-black font-manrope outline-none ${
+                    errors.name ? "border-red-500" : "border-black"
                   }`}
                   placeholder="Enter your first name"
-                  value={firstname}
-                  onChange={(e) => setFirstname(e.target.value)}
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                 />
-                {errors.firstname && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {errors.firstname}
-                  </p>
+                {errors.name && (
+                  <p className="text-red-500 text-sm mt-1">{errors.name}</p>
                 )}
               </div>
             </div>
@@ -275,7 +265,7 @@ const Contact = () => {
               <input
                 type="email"
                 id="email"
-                className={`w-full p-2 border-b bg-inherit placeholder:text-slate-500 text-black font-manrope outline-none ${
+                className={`w-full p-2 border rounded px-2 bg-inherit placeholder:text-slate-500 text-black font-manrope outline-none ${
                   errors.email ? "border-red-500" : "border-black"
                 }`}
                 placeholder="Enter your email"
@@ -297,7 +287,7 @@ const Contact = () => {
                 <input
                   type="tel"
                   id="phone"
-                  className={`w-full p-2 border-b bg-inherit placeholder:text-slate-500 text-black font-manrope outline-none ${
+                  className={`w-full p-2 border rounded px-2 bg-inherit placeholder:text-slate-500 text-black font-manrope outline-none ${
                     errors.phone ? "border-red-500" : "border-black"
                   }`}
                   placeholder="Enter your phone number"
@@ -321,7 +311,7 @@ const Contact = () => {
                 <input
                   type="datetime-local"
                   id="aptDate"
-                  className={`w-full p-2 border-b bg-inherit placeholder:text-slate-500 text-black font-manrope outline-none ${
+                  className={`w-full p-2 border rounded px-2 bg-inherit placeholder:text-slate-500 text-black font-manrope outline-none ${
                     errors.aptDate ? "border-red-500" : "border-black"
                   }`}
                   placeholder="Enter Appointment date"
@@ -344,7 +334,7 @@ const Contact = () => {
               <div className="relative">
                 <textarea
                   id="message"
-                  className={`w-full p-2 border-b bg-inherit placeholder:text-slate-500 text-black font-manrope outline-none ${
+                  className={`w-full p-2 border rounded px-2 bg-inherit placeholder:text-slate-500 text-black font-manrope outline-none ${
                     errors.message ? "border-red-500" : "border-black"
                   }`}
                   placeholder="Write your message..."

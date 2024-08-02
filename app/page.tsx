@@ -2,6 +2,7 @@ import Benefits from "@/components/Benefits";
 import Contact from "@/components/Contact";
 import HeroSection from "@/components/HeroSection";
 import Introduction from "@/components/Introduction";
+import Location from "@/components/Location";
 import Testimonials from "@/components/Testimonials";
 
 export default function Home() {
@@ -12,6 +13,7 @@ export default function Home() {
       <Benefits />
       <Testimonials />
       <Contact />
+      <Location />
     </section>
   );
 }
