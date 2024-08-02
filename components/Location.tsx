@@ -29,7 +29,18 @@ const Location = () => {
           Even better, visit us in person!
         </motion.p>
         <div className="block md:flex">
-          <div className="w-1/2 bg-black/80 p-5 rounded-tl-2xl rounded-bl-2xl text-white">
+          <div className="md:w-1/2 md:hidden">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3782.3127125536!2d73.8044870834696!3d18.55993533752529!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2bf66003c3549%3A0xf1edb518aeda0409!2sDental%20Care%20Solutions%20-%20Dental%20clinic%20in%20Aundh%20%2FBest%20Dentist%20in%20Aundh%20%2CPune!5e0!3m2!1sen!2sin!4v1722612879058!5m2!1sen!2sin"
+              width="100%"
+              height="100%"
+              allowFullScreen
+              loading="lazy"
+              className="min-h-80"
+              referrerPolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </div>
+          <div className="md:w-1/2 bg-black/80 p-5 md:rounded-tl-2xl md:rounded-bl-2xl text-white">
             <div className="mb-10">
               <h3 className="font-abril text-2xl mb-3">Clinic Address</h3>
               <p className="!leading-relaxed font-manrope md:text-[20px]">
@@ -55,7 +66,7 @@ const Location = () => {
                 <div className="flex gap-2 items-center my-3">
                   <EnvelopeIcon className=" font-manrope w-6 h-6" />
                   <Link
-                    href="mailto:support@glam2door.com"
+                    href="mailto:contact@dentalcaresolutions.com"
                     className=" font-manrope md:text-lg"
                   >
                     contact@dentalcaresolutions.com
@@ -73,7 +84,7 @@ const Location = () => {
               </div>
             </div>
           </div>
-          <div className="w-1/2">
+          <div className="md:w-1/2 hidden md:block">
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3782.3127125536!2d73.8044870834696!3d18.55993533752529!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2bf66003c3549%3A0xf1edb518aeda0409!2sDental%20Care%20Solutions%20-%20Dental%20clinic%20in%20Aundh%20%2FBest%20Dentist%20in%20Aundh%20%2CPune!5e0!3m2!1sen!2sin!4v1722612879058!5m2!1sen!2sin"
               width="100%"

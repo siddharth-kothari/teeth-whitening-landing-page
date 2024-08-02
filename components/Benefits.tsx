@@ -6,7 +6,7 @@ import { fadeIn, textVariant } from "@/utils/motion";
 
 const Benefits = () => {
   return (
-    <section className="pb-12 sm:pb-16 lg:pt-8">
+    <section className="pb-12 sm:pb-16 lg:pt-8 px-4">
       <div className="max-w-7xl mx-auto">
         <motion.p
           variants={textVariant(0)}

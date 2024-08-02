@@ -23,7 +23,7 @@ const Introduction = () => {
             whileInView="show"
             initial="hidden"
             viewport={{ once: true, amount: 0.25 }}
-            className="!leading-relaxed font-manrope md:text-[20px] mb-5 lg:mb-0 text-center"
+            className="!leading-relaxed px-4 font-manrope md:text-[20px] mb-5 lg:mb-0 text-center"
           >
             At Dental Care Solutions, we offer top-notch teeth whitening
             services using the latest technology and expert care. Our

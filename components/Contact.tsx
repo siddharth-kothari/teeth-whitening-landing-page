@@ -214,7 +214,7 @@ const Contact = () => {
           your teeth whitening session today.
         </motion.p>
 
-        <div className="grid max-w-lg grid-cols-1 mx-auto lg:max-w-full lg:items-center lg:grid-cols-2 gap-y-6 mt-10 border border-slate-800 p-5 rounded-xl">
+        <div className="grid grid-cols-1 mx-auto md:max-w-full md:items-center md:grid-cols-2 gap-y-6 mt-10 border border-slate-800 p-5 rounded-xl">
           <motion.div
             variants={fadeIn("bottom", "spring", 0, 1)}
             whileInView="show"

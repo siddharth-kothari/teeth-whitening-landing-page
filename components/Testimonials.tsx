@@ -18,7 +18,7 @@ const Testimonials = () => {
         >
           What Our Patients Have to Say
         </motion.p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-y-10 xl:gap-x-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-y-10 xl:gap-x-10 px-4">
           <TestimonialCard
             review={
               "I love my new smile! The team at Dental Care Solutions was amazing!"
