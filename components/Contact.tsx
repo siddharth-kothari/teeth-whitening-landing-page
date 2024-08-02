@@ -198,7 +198,7 @@ const Contact = () => {
           whileInView="show"
           initial="hidden"
           viewport={{ once: true, amount: 0.25 }}
-          className=" font-abril text-black text-4xl sm:text-5xl !leading-tight mb-8 text-center"
+          className=" font-abril text-black text-4xl sm:text-5xl !leading-tight mb-3 text-center"
         >
           Contact Us
         </motion.p>
