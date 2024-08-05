@@ -118,7 +118,8 @@ const HeroSection = () => {
                   viewport={{ once: true, amount: 0.25 }}
                   className="text-4xl font-abril leading-tight text-gray-900 sm:text-5xl sm:leading-tight lg:leading-tight lg:text-6xl font-pj"
                 >
-                  Achieve a Brighter Smile with Professional Teeth Whitening.
+                  Discover Your Brightest Smile with Teeth Whitening at Dental
+                  Care Solutions
                 </motion.h1>
                 <motion.p
                   variants={textVariant(0.5)}

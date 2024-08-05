@@ -30,18 +30,18 @@ const Testimonials = () => {
           />
           <TestimonialCard
             review={
-              "I love my new smile! The team at Dental Care Solutions was amazing!"
+              "So impressed with teeth whitening results from Dental Care Solutions .My smile is so much brighter Now"
             }
-            patient={"Mitali"}
+            patient={"Anand"}
             idx={1}
             rating={4}
             experience={"Trusted & Reliable"}
           />
           <TestimonialCard
             review={
-              "I love my new smile! The team at Dental Care Solutions was amazing!"
+              "I can’t believe how much whiter my teeth are! Dr. Chaitali made the whole process smooth and easy."
             }
-            patient={"Mitali"}
+            patient={"Krutika"}
             idx={2}
             rating={5}
             experience={"Excellent Service"}

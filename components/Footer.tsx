@@ -61,7 +61,7 @@ const Footer = () => {
             viewport={{ once: true, amount: 0.25 }}
             className={`cursor-pointer`}
           >
-            <Link href="mailto:contact@dentalcaresolutions.com" target="blank">
+            <Link href="mailto:dentalsmileshinellp@gmail.com" target="blank">
               <Image
                 quality={50}
                 src={mail}
@@ -79,7 +79,7 @@ const Footer = () => {
             viewport={{ once: true, amount: 0.25 }}
             className={`cursor-pointer`}
           >
-            <Link href="tel:+911234567890" target="blank">
+            <Link href="tel:+917972659371" target="blank">
               <Image
                 quality={50}
                 src={phone}

@@ -45,18 +45,15 @@ const Location = () => {
               <h3 className="font-abril text-2xl mb-3">Clinic Address</h3>
               <p className="!leading-relaxed font-manrope md:text-[20px]">
                 101, Elpis IVF and Maternity Hospital, Parihar Chowk, ITI Rd,
-                beside Malabar Gold and Diamonds, Sindh Society, Aundh, Pune,
-                Maharashtra 411007
+                beside Malabar Gold and Diamonds, Aundh, Pune, Maharashtra
+                411007
               </p>
             </div>
 
             <div className="mb-10">
               <h3 className="font-abril text-2xl mb-3">Business Hours</h3>
               <p className="!leading-relaxed font-manrope md:text-[20px]">
-                Monday to Friday: 9 AM - 6 PM
-              </p>
-              <p className="!leading-relaxed font-manrope md:text-[20px]">
-                Saturday: 9 AM - 1 PM
+                Monday to Saturday: 10:00 AM - 8:00 PM
               </p>
             </div>
 
@@ -66,19 +63,19 @@ const Location = () => {
                 <div className="flex gap-2 items-center my-3">
                   <EnvelopeIcon className=" font-manrope w-6 h-6" />
                   <Link
-                    href="mailto:contact@dentalcaresolutions.com"
+                    href="mailto:dentalsmileshinellp@gmail.com"
                     className=" font-manrope md:text-lg"
                   >
-                    contact@dentalcaresolutions.com
+                    dentalsmileshinellp@gmail.com
                   </Link>
                 </div>
                 <div className="flex gap-2 items-center my-3">
                   <PhoneIcon className=" font-manrope w-6 h-6" />
                   <Link
-                    href="tel:+911234560789"
+                    href="tel:+917972659371"
                     className=" font-manrope md:text-lg"
                   >
-                    +91 12345 60789
+                    +91 79726 59371
                   </Link>
                 </div>
               </div>
