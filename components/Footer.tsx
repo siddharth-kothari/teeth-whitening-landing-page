@@ -43,7 +43,7 @@ const Footer = () => {
             viewport={{ once: true, amount: 0.25 }}
             className={`cursor-pointer`}
           >
-            <Link href={`https://wa.me/911234567890`} target="blank">
+            <Link href={`https://wa.me/917972659371`} target="blank">
               <Image
                 quality={50}
                 src={whatsapp}
