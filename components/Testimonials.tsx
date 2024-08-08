@@ -25,8 +25,6 @@ const Testimonials = () => {
             }
             patient={"Mitali"}
             idx={0}
-            rating={5}
-            experience={"Excellent Service"}
           />
           <TestimonialCard
             review={
@@ -34,8 +32,6 @@ const Testimonials = () => {
             }
             patient={"Anand"}
             idx={1}
-            rating={4}
-            experience={"Trusted & Reliable"}
           />
           <TestimonialCard
             review={
@@ -43,8 +39,6 @@ const Testimonials = () => {
             }
             patient={"Krutika"}
             idx={2}
-            rating={5}
-            experience={"Excellent Service"}
           />
         </div>
       </div>

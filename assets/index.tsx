@@ -1,5 +1,5 @@
-import heroImage from "./General-Female-6.png";
-import contactImage from "./General-Female-1.png";
+import heroImage from "./General-Female-6.webp";
+import contactImage from "./General-Female-1.webp";
 import loading from "./loading.gif";
 import insta from "./insta.png";
 import whatsapp from "./whatsapp.png";
