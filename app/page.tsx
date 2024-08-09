@@ -6,6 +6,7 @@ import Location from "@/components/Location";
 import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
 import Outro from "@/components/Outro";
+import Work from "@/components/Work";
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
       <Introduction />
       <Benefits />
       <Testimonials />
+      <Work />
       <Outro />
       <Contact />
       <Location />
