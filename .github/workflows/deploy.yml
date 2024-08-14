@@ -24,6 +24,14 @@ jobs:
       - name: Build the app
         run: npm run build
 
+      - name: Test SSH Connection
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_KEY }}
+        run: |
+          echo "$SSH_PRIVATE_KEY" > private_key.pem
+          chmod 600 private_key.pem
+          ssh -o StrictHostKeyChecking=no -i private_key.pem root@82.112.231.185 "echo 'SSH connection successful'"
+
       - name: Deploy to VPS via SSH
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_KEY }}
