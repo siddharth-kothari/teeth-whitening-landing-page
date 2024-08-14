@@ -3,3 +3,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+
+    .iti,
+    .iti--allow-dropdown {
+        width: 100% !important;
+    }
+}

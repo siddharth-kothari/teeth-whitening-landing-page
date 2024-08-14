@@ -6,6 +6,8 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { textVariant, zoomIn, fadeIn } from "@/utils/motion";
 import ReCAPTCHA from "react-google-recaptcha";
+import "intl-tel-input/build/css/intlTelInput.css";
+import intlTelInput from "intl-tel-input";
 
 const Contact = () => {
   const [name, setName] = useState("");
@@ -30,6 +32,26 @@ const Contact = () => {
   useEffect(() => {
     const input = document.getElementById("aptDate") as HTMLInputElement;
 
+    const phone = document.getElementById("phone") as HTMLInputElement;
+
+    const itiElement = document.querySelector(".iti") as HTMLInputElement;
+    if (itiElement) {
+      itiElement.style.width = "100%";
+    }
+
+    intlTelInput(phone, {
+      utilsScript:
+        "https://cdn.jsdelivr.net/npm/intl-tel-input@23.8.1/build/js/utils.js",
+      autoPlaceholder: "aggressive",
+      hiddenInput: function (telInputName) {
+        return {
+          phone: "phone_full",
+          country: "country_code",
+        };
+      },
+      initialCountry: "in",
+    });
+
     if (input) {
       const date = new Date();
       const offset = 5.5 * 60 * 60 * 1000;
@@ -37,9 +59,6 @@ const Contact = () => {
       setAptDate(now);
     }
   }, []);
-
-  if (hydrated) {
-  }
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
