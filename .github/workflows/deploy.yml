@@ -24,11 +24,22 @@ jobs:
       - name: Build the app
         run: npm run build
 
-      - name: Deploy to VPS via SSH
+      - name: Set up SSH key
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_KEY }}
+          SSH_PASSPHRASE: ${{ secrets.SSH_PASSPHRASE }}
         run: |
-          ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY root@82.112.231.185 << 'EOF'
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+
+          # Add passphrase to ssh-agent
+          eval "$(ssh-agent -s)"
+          echo "$SSH_PASSPHRASE" | ssh-add ~/.ssh/id_rsa
+
+      - name: Deploy to VPS via SSH
+        run: |
+          ssh -o StrictHostKeyChecking=no root@82.112.231.185 << 'EOF'
           cd "/root/teeth-whitening-landing-page"
           git pull origin master
           npm install --production
