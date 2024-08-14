@@ -156,7 +156,7 @@ const HeroSection = () => {
               whileInView="show"
               initial="hidden"
               viewport={{ once: true, amount: 0.25 }}
-              className="relative"
+              className="relative hidden"
             >
               <Image className="w-full" src={heroImage} alt="" />
             </motion.div>
