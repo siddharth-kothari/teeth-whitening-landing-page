@@ -3,11 +3,11 @@ import { query } from "@/config/db";
 
 export const POST = async (req: Request) => {
   const data = await req.json();
-
+  console.log(data);
   try {
     const result = await query({
       query:
-        "INSERT INTO appointments(name,email,mobile_no,appointment_date,message) VALUES(?,?,?,?,?,)",
+        "INSERT INTO appointments(name,email,mobile_no,appointment_date,message) VALUES(?,?,?,?,?)",
       data: [data.name, data.email, data.phone, data.aptDate, data.message],
     });
 

@@ -73,7 +73,6 @@ const Contact = () => {
     }
 
     function formatDate(date: any) {
-      console.log(date);
       const options: Intl.DateTimeFormatOptions = {
         year: "numeric",
         month: "long",
@@ -118,6 +117,20 @@ const Contact = () => {
     };
     var body = JSON.stringify(userData);
     const { data } = await api.post(`/api/request-appointment`, body);
+
+    if (data.status === 200) {
+      setIsLoading(false);
+      alert("Request Submitted");
+
+      setName("");
+      setEmail("");
+      setPhone("");
+      setAptDate("");
+      setMessage("");
+    } else {
+      setIsLoading(false);
+      alert("Something went wrong");
+    }
     //}
   };
 
