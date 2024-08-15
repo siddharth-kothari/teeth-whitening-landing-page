@@ -7,7 +7,8 @@ import { motion } from "framer-motion";
 import { textVariant, zoomIn, fadeIn } from "@/utils/motion";
 import ReCAPTCHA from "react-google-recaptcha";
 import "intl-tel-input/build/css/intlTelInput.css";
-import intlTelInput from "intl-tel-input";
+import { api } from "@/app/api";
+import IntlTelInput from "intl-tel-input/react";
 
 const Contact = () => {
   const [name, setName] = useState("");
@@ -16,7 +17,6 @@ const Contact = () => {
   const [message, setMessage] = useState("");
   const [aptDate, setAptDate] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [hydrated, setHydrated] = useState(false);
   const [errors, setErrors] = useState<Errors>({});
   const [showtoast, setShowToast] = useState(false);
   const recaptcha = useRef<ReCAPTCHA>(null);
@@ -32,26 +32,6 @@ const Contact = () => {
   useEffect(() => {
     const input = document.getElementById("aptDate") as HTMLInputElement;
 
-    const phone = document.getElementById("phone") as HTMLInputElement;
-
-    const itiElement = document.querySelector(".iti") as HTMLInputElement;
-    if (itiElement) {
-      itiElement.style.width = "100%";
-    }
-
-    intlTelInput(phone, {
-      utilsScript:
-        "https://cdn.jsdelivr.net/npm/intl-tel-input@23.8.1/build/js/utils.js",
-      autoPlaceholder: "aggressive",
-      hiddenInput: function (telInputName) {
-        return {
-          phone: "phone_full",
-          country: "country_code",
-        };
-      },
-      initialCountry: "in",
-    });
-
     if (input) {
       const date = new Date();
       const offset = 5.5 * 60 * 60 * 1000;
@@ -60,11 +40,10 @@ const Contact = () => {
     }
   }, []);
 
-  const handleSubmit = async (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const phoneRegex = /^[0-9]{10}$/;
-    // var phoneResult = phoneRegex.test(phone);
+    const phoneRegex = /^\+?[1-9]\d{1,14}$/;
 
     // Validate form fields
     const validationErrors: Errors = {};
@@ -92,7 +71,7 @@ const Contact = () => {
       setErrors(validationErrors);
       return;
     }
-    console.log(aptDate);
+
     function formatDate(date: any) {
       console.log(date);
       const options: Intl.DateTimeFormatOptions = {
@@ -103,26 +82,15 @@ const Contact = () => {
         minute: "2-digit",
         second: "2-digit",
       };
+
       if (date != "" || date != null) {
         return new Intl.DateTimeFormat("en-US", options).format(date);
       }
     }
 
     const currentDate = new Date(aptDate);
-    const formattedDate = hydrated ? formatDate(currentDate) : "";
+    const formattedDate = formatDate(currentDate);
 
-    var msg =
-      "Hello, I want to book an appointment.\n Details:\n Name: " +
-      name +
-      " " +
-      "\n Email: " +
-      email +
-      "\n Mobile No.: " +
-      phone +
-      "\n Appointment date: " +
-      formattedDate +
-      "\n Message: " +
-      message;
     setIsLoading(true);
 
     const captchaValue = recaptcha.current?.getValue();
@@ -141,71 +109,15 @@ const Contact = () => {
       //     theme: "dark",
       //   });
     } else {
-      window.open(
-        "https://wa.me/918668295955?text=" + encodeURIComponent(msg),
-        "_blank"
-      );
-
-      //   emailjs
-      //     .send(
-      //       "service_husnupj",
-      //       "template_ydxe9p8",
-      //       {
-      //         from_name: name + " " + lastname,
-      //         to_name: "Glam2Door Support",
-      //         from_email: email,
-      //         to_email: "contact.glam2door@gmail.com",
-      //         reply_to: email,
-      //         message: msg,
-      //       },
-      //       "KOjcP3ph_caGJz32n"
-      //     )
-      //     .then(
-      //       () => {
-      //         setIsLoading(false);
-      //         // alert(
-      //         //   "Thanks for reaching out to us. We will get back to you as soon as possible."
-      //         // );
-
-      //         setFirstname("");
-      //         setLastname("");
-      //         setEmail("");
-      //         setPhone("");
-      //         setMessage("");
-      //         setAptDate("");
-      //         setService("");
-      //         setShowToast(true);
-      //         toast.success("Message sent successfully!", {
-      //           position: "top-center",
-      //           autoClose: 2000,
-      //           hideProgressBar: false,
-      //           closeOnClick: true,
-      //           pauseOnHover: true,
-      //           draggable: true,
-      //           progress: undefined,
-      //           theme: "dark",
-      //         });
-
-      //         setTimeout(() => {
-      //           window.open("/", "");
-      //         }, 2500);
-      //       },
-      //       (error) => {
-      //         setIsLoading(false);
-      //         console.log(error.text);
-      //         setShowToast(true);
-      //         toast.error("Something went wrong!", {
-      //           position: "top-center",
-      //           autoClose: 2000,
-      //           hideProgressBar: false,
-      //           closeOnClick: true,
-      //           pauseOnHover: true,
-      //           draggable: true,
-      //           progress: undefined,
-      //           theme: "dark",
-      //         });
-      //       }
-      //     );
+      const userData = {
+        name,
+        email,
+        phone,
+        aptDate: formattedDate,
+        message,
+      };
+      var body = JSON.stringify(userData);
+      const { data } = await api.post(`/api/request-appointment`, body);
     }
   };
 
@@ -302,16 +214,21 @@ const Contact = () => {
               >
                 Phone
               </label>
-              <div className="relative">
-                <input
-                  type="tel"
-                  id="phone"
-                  className={`w-full p-2 border rounded px-2 bg-inherit placeholder:text-slate-500 text-black font-manrope outline-none ${
-                    errors.phone ? "border-red-500" : "border-black"
-                  }`}
-                  placeholder="Enter your phone number"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
+              <div
+                className={`relative w-full p-2 border rounded px-2 bg-inherit placeholder:text-slate-500 text-black font-manrope outline-none ${
+                  errors.phone ? "border-red-500" : "border-black"
+                }`}
+              >
+                <IntlTelInput
+                  onChangeNumber={setPhone}
+                  inputProps={{
+                    className: "bg-transparent outline-none ring-transparent",
+                  }}
+                  initOptions={{
+                    initialCountry: "in",
+                    utilsScript:
+                      "https://cdn.jsdelivr.net/npm/intl-tel-input@23.8.1/build/js/utils.js",
+                  }}
                 />
               </div>
               {errors.phone && (
