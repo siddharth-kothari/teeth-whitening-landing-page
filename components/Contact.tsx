@@ -95,30 +95,30 @@ const Contact = () => {
 
     const captchaValue = recaptcha.current?.getValue();
 
-    if (!captchaValue) {
-      setIsLoading(false);
-      setShowToast(true);
-      //   toast.error("Please verify the reCAPTCHA!", {
-      //     position: "top-center",
-      //     autoClose: 2000,
-      //     hideProgressBar: false,
-      //     closeOnClick: true,
-      //     pauseOnHover: true,
-      //     draggable: true,
-      //     progress: undefined,
-      //     theme: "dark",
-      //   });
-    } else {
-      const userData = {
-        name,
-        email,
-        phone,
-        aptDate: formattedDate,
-        message,
-      };
-      var body = JSON.stringify(userData);
-      const { data } = await api.post(`/api/request-appointment`, body);
-    }
+    // if (!captchaValue) {
+    //   setIsLoading(false);
+    //   setShowToast(true);
+    //   //   toast.error("Please verify the reCAPTCHA!", {
+    //   //     position: "top-center",
+    //   //     autoClose: 2000,
+    //   //     hideProgressBar: false,
+    //   //     closeOnClick: true,
+    //   //     pauseOnHover: true,
+    //   //     draggable: true,
+    //   //     progress: undefined,
+    //   //     theme: "dark",
+    //   //   });
+    // } else {
+    const userData = {
+      name,
+      email,
+      phone,
+      aptDate: formattedDate,
+      message,
+    };
+    var body = JSON.stringify(userData);
+    const { data } = await api.post(`/api/request-appointment`, body);
+    //}
   };
 
   return (

@@ -40,5 +40,5 @@ jobs:
           git pull origin master
           npm install --production
           npm run build
-          pm2 restart my-nextjs-app
+          pm2 restart dental-care-solutions
           EOF
