@@ -8,6 +8,8 @@ import phone from "./phone.png";
 import work1 from "./work1.png";
 import work2 from "./work2.jpg";
 
+import headerLogo from "./header-logo.webp";
+
 export {
   heroImage,
   contactImage,
@@ -18,4 +20,5 @@ export {
   phone,
   work1,
   work2,
+  headerLogo,
 };

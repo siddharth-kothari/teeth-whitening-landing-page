@@ -1,3 +1,6 @@
+import { headerLogo } from "@/assets";
+import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 const Header = () => {
@@ -6,17 +9,9 @@ const Header = () => {
       <div className="container px-4 mx-auto sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           <div className="flex-shrink-0">
-            <a
-              href="#"
-              title=""
-              className="flex rounded outline-none focus:ring-1 focus:ring-gray-900 focus:ring-offset-2"
-            >
-              <img
-                className="w-auto h-8"
-                src="https://d33wubrfki0l68.cloudfront.net/682a555ec15382f2c6e7457ca1ef48d8dbb179ac/f8cd3/images/logo.svg"
-                alt=""
-              />
-            </a>
+            <Link href="" title="" className="flex rounded outline-none">
+              <Image className="w-auto h-8" src={headerLogo} alt="" />
+            </Link>
           </div>
 
           <div className="flex lg:hidden">
