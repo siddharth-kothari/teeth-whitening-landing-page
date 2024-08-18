@@ -19,7 +19,6 @@ export default function Home() {
       <Outro />
       <Contact />
       <Location />
-      <Footer />
     </section>
   );
 }

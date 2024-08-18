@@ -11,3 +11,11 @@
         width: 100% !important;
     }
 }
+
+@layer utilities {
+    .bg-blur::before {
+        content: '';
+        @apply absolute inset-0 bg-cover bg-center backdrop-blur-lg bg-opacity-50;
+        z-index: -1;
+    }
+}
