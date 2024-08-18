@@ -118,7 +118,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  href="/about"
+                  href="/about-us"
                   title=""
                   className="flex text-base text-black transition-all duration-200 hover:font-extrabold"
                 >

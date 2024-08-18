@@ -1,11 +1,22 @@
+"use client";
+
 import { headerLogo } from "@/assets";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+
+import React, { useState } from "react";
+import {
+  HoveredLink,
+  Menu,
+  MenuItem,
+  ProductItem,
+} from "@/components/ui/navbar-menu";
+import { cn } from "@/lib/utils";
 
 const Header = () => {
+  const [active, setActive] = useState<string | null>(null);
   return (
-    <header className="py-4 md:py-6 sticky top-0 z-10 bg-blur">
+    <header className="sticky top-0 z-10 bg-blur">
       <div className="container px-4 mx-auto sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           <div className="flex-shrink-0">
@@ -33,63 +44,45 @@ const Header = () => {
             </button>
           </div>
 
-          <div className="hidden lg:flex lg:ml-10 xl:ml-16 lg:items-center lg:justify-center lg:space-x-8 xl:space-x-16">
-            <a
-              href="#"
-              title=""
-              className="text-base font-medium text-gray-900 transition-all duration-200 rounded focus:outline-none font-pj hover:text-opacity-50 focus:ring-1 focus:ring-gray-900 focus:ring-offset-2"
+          <Menu setActive={setActive}>
+            <MenuItem
+              setActive={setActive}
+              active={active}
+              item="About Us"
+              isSubMenu={false}
+              href="/about-us"
+            ></MenuItem>
+            <MenuItem
+              setActive={setActive}
+              active={active}
+              item="Treatments"
+              isSubMenu={true}
             >
-              {" "}
-              Solutions{" "}
-            </a>
+              <div className="grid grid-cols-3 gap-10 p-2">
+                <HoveredLink href="/treatments/teeth-whitening">
+                  Teeth Whitening
+                </HoveredLink>
+              </div>
+            </MenuItem>
+            <MenuItem
+              setActive={setActive}
+              active={active}
+              item="Contact Us"
+              isSubMenu={false}
+              href="/contact-us"
+            ></MenuItem>
+          </Menu>
 
+          <div className="hidden lg:flex lg:items-center lg:space-x-8 xl:space-x-10">
             <a
               href="#"
               title=""
-              className="text-base font-medium text-gray-900 transition-all duration-200 rounded focus:outline-none font-pj hover:text-opacity-50 focus:ring-1 focus:ring-gray-900 focus:ring-offset-2"
-            >
-              {" "}
-              Industries{" "}
-            </a>
-
-            <a
-              href="#"
-              title=""
-              className="text-base font-medium text-gray-900 transition-all duration-200 rounded focus:outline-none font-pj hover:text-opacity-50 focus:ring-1 focus:ring-gray-900 focus:ring-offset-2"
-            >
-              {" "}
-              Fees{" "}
-            </a>
-
-            <a
-              href="#"
-              title=""
-              className="text-base font-medium text-gray-900 transition-all duration-200 rounded focus:outline-none font-pj hover:text-opacity-50 focus:ring-1 focus:ring-gray-900 focus:ring-offset-2"
-            >
-              {" "}
-              About Rareblocks{" "}
-            </a>
-          </div>
-
-          {/* <div className="hidden lg:ml-auto lg:flex lg:items-center lg:space-x-8 xl:space-x-10">
-            <a
-              href="#"
-              title=""
-              className="text-base font-medium text-gray-900 transition-all duration-200 rounded focus:outline-none font-pj hover:text-opacity-50 focus:ring-1 focus:ring-gray-900 focus:ring-offset-2"
-            >
-              {" "}
-              Sign in{" "}
-            </a>
-
-            <a
-              href="#"
-              title=""
-              className="px-5 py-2 text-base font-bold leading-7 text-white transition-all duration-200 bg-gray-900 border border-transparent rounded-xl hover:bg-gray-600 font-pj focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
+              className="px-5 py-2 text-base font-bold leading-7 text-white transition-all duration-200 bg-gray-900 border border-transparent rounded-lg hover:bg-gray-600 font-pj focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
               role="button"
             >
-              Create free account
+              Book Appointment
             </a>
-          </div> */}
+          </div>
         </div>
       </div>
     </header>
