@@ -1,8 +1,8 @@
-import type { Metadata } from "next";
 import "./globals.css";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { HeaderNew } from "@/components/HeaderNew";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Teeth Whitening Treatment",
