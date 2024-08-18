@@ -20,7 +20,7 @@ const Header = () => {
       <div className="container px-4 mx-auto sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           <div className="flex-shrink-0">
-            <Link href="" title="" className="flex rounded outline-none">
+            <Link href="/" title="home" className="flex rounded outline-none">
               <Image className="w-auto h-8" src={headerLogo} alt="" />
             </Link>
           </div>
@@ -77,7 +77,7 @@ const Header = () => {
             <a
               href="#"
               title=""
-              className="px-5 py-2 text-base font-bold leading-7 text-white transition-all duration-200 bg-gray-900 border border-transparent rounded-lg hover:bg-gray-600 font-pj focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
+              className="px-5 py-2 text-base font-bold leading-7 text-white transition-all duration-200 bg-gray-900 rounded-lg font-pj"
               role="button"
             >
               Book Appointment

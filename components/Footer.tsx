@@ -11,7 +11,7 @@ import { insta, mail, phone, whatsapp } from "@/assets";
 const Footer = () => {
   var year = new Date().getFullYear();
   return (
-    <section className="border-t py-10 bg-gray-50 sm:pt-16 lg:pt-24">
+    <section className="border-t py-10 bg-gray-50 sm:pt-16">
       <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
         <div className="grid grid-cols-2 md:col-span-3 lg:grid-cols-6 gap-y-16 gap-x-12">
           <div className="col-span-2 md:col-span-3 lg:col-span-2 lg:pr-8">
@@ -21,8 +21,82 @@ const Footer = () => {
               Amet minim mollit non deserunt ullamco est sit aliqua dolor do
               amet sint. Velit officia consequat duis enim velit mollit.
             </p>
+          </div>
 
-            <ul className="list-none flex items-center space-x-10 mt-9">
+          <div>
+            <p className="text-sm font-semibold tracking-widest text-gray-400 uppercase">
+              Quick Links
+            </p>
+
+            <ul className="mt-6 space-y-4">
+              <li>
+                <Link
+                  href="/"
+                  title=""
+                  className="flex text-base text-black transition-all duration-200 hover:font-extrabold"
+                >
+                  {" "}
+                  Home{" "}
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/about-us"
+                  title=""
+                  className="flex text-base text-black transition-all duration-200 hover:font-extrabold"
+                >
+                  {" "}
+                  About Us{" "}
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/about-us"
+                  title=""
+                  className="flex text-base text-black transition-all duration-200 hover:font-extrabold"
+                >
+                  {" "}
+                  Treatments{" "}
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/about-us"
+                  title=""
+                  className="flex text-base text-black transition-all duration-200 hover:font-extrabold"
+                >
+                  {" "}
+                  Blogs{" "}
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <p className="text-sm font-semibold tracking-widest text-gray-400 uppercase">
+              Help
+            </p>
+
+            <ul className="mt-6 space-y-4">
+              <li>
+                <Link
+                  href="/contact-us"
+                  title=""
+                  className="flex text-base text-black transition-all duration-200 hover:font-extrabold"
+                >
+                  {" "}
+                  Contact Us{" "}
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div className="col-span-2 md:col-span-3 lg:col-span-2 lg:pr-8">
+            <p className="text-sm font-semibold tracking-widest text-gray-400 uppercase">
+              Connect with us
+            </p>
+
+            <ul className="list-none flex items-center space-x-10 mt-6">
               <motion.li
                 variants={zoomIn(0, 0.2, 1.25)}
                 whileHover="show"
@@ -97,54 +171,6 @@ const Footer = () => {
                   />
                 </Link>
               </motion.li>
-            </ul>
-          </div>
-
-          <div>
-            <p className="text-sm font-semibold tracking-widest text-gray-400 uppercase">
-              Company
-            </p>
-
-            <ul className="mt-6 space-y-4">
-              <li>
-                <Link
-                  href="/"
-                  title=""
-                  className="flex text-base text-black transition-all duration-200 hover:font-extrabold"
-                >
-                  {" "}
-                  Home{" "}
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/about-us"
-                  title=""
-                  className="flex text-base text-black transition-all duration-200 hover:font-extrabold"
-                >
-                  {" "}
-                  About Us{" "}
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <p className="text-sm font-semibold tracking-widest text-gray-400 uppercase">
-              Help
-            </p>
-
-            <ul className="mt-6 space-y-4">
-              <li>
-                <Link
-                  href="/contact-us"
-                  title=""
-                  className="flex text-base text-black transition-all duration-200 hover:font-extrabold"
-                >
-                  {" "}
-                  Contact Us{" "}
-                </Link>
-              </li>
             </ul>
           </div>
         </div>

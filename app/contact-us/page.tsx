@@ -1,7 +1,14 @@
+import Contact from "@/components/Contact";
+import Location from "@/components/Location";
 import React from "react";
 
 const ContactUs = () => {
-  return <div>ContactUs</div>;
+  return (
+    <>
+      <Contact />
+      <Location />
+    </>
+  );
 };
 
 export default ContactUs;
