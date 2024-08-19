@@ -20,7 +20,7 @@ import HamburgerMenu from "./HamBurgerMenu";
 
 const Header = () => {
   const { data: session, status } = useSession();
-  console.log(session);
+
   const user: any = session?.user;
   const name = user?.name.split(" ") ?? "User";
   const components: { title: string; href: string }[] = [

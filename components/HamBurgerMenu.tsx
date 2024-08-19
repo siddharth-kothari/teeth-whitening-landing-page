@@ -49,12 +49,12 @@ const HamburgerMenu: React.FC = () => {
           shadow-lg"
         >
           {!user && (
-            <p
-              onClick={() => signIn()}
+            <Link
+              href="/login"
               className="cursor-pointer block px-4 py-2 text-sm hover:font-bold text-black"
             >
               Sign In
-            </p>
+            </Link>
           )}
           <Link
             href="/"

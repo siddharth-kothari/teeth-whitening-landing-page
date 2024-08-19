@@ -23,7 +23,7 @@ const signInCallback: (
     try {
       const name = user.name?.split(" ") ?? "User";
       const results = await query({
-        query: "SELECT * FROM users WHERE email = ?",
+        query: "SELECT * FROM users WHERE email = ? AND is_deleted != 1",
         data: [user.email],
       });
 
@@ -51,13 +51,13 @@ const callbacks = {
     try {
       //console.log("session", session);
       const results = await query({
-        query: "SELECT id, image, username FROM users WHERE email = ?",
+        query:
+          "SELECT id, first_name FROM users WHERE email = ? AND is_deleted != 1",
         data: [session.user.email],
       });
       const data = results[0];
 
-      session.user.username = data.username;
-      session.user.image = data.image;
+      session.user.name = data.first_name;
       session.user.id = data.id;
     } catch (error) {
       console.log(error);
@@ -80,14 +80,15 @@ export const options: NextAuthOptions = {
       id: "credentials",
       name: "credentials",
       credentials: {
-        username: { label: "Email", type: "text" },
+        email: { label: "email", type: "text" },
         password: { label: "Password", type: "password" },
       },
+
       async authorize(credentials: any) {
         try {
           const existingUser = await query({
-            query: "SELECT * FROM users WHERE email = ?",
-            data: [credentials?.username],
+            query: "SELECT * FROM users WHERE email = ? AND is_deleted != 1",
+            data: [credentials?.email],
           });
 
           const decodedString = Buffer.from(

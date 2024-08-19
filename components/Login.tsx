@@ -164,7 +164,7 @@ const Login = () => {
 
         <div className="text-center text-sm text-[#4f516e]">
           Don&apos;t have an account?{" "}
-          <Link className="text-[#0070ff]" href="/signin">
+          <Link className="text-[#0070ff]" href="/register">
             Sign Up Now.
           </Link>
         </div>
