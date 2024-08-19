@@ -28,7 +28,6 @@ export const MenuItem = ({
   isSubMenu?: Boolean;
   href?: string | any;
 }) => {
-  console.log("children", children);
   return (
     <div onMouseEnter={() => setActive(item)} className="relative ">
       {isSubMenu === false ? (
