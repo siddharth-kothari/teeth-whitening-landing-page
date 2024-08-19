@@ -11,7 +11,9 @@
   "dependencies": {
     "@heroicons/react": "^2.1.5",
     "@radix-ui/react-navigation-menu": "^1.2.0",
+    "@radix-ui/react-separator": "^1.1.0",
     "axios": "^1.7.4",
+    "bcryptjs": "^2.4.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "framer-motion": "^11.3.28",
@@ -19,6 +21,7 @@
     "lucide-react": "^0.428.0",
     "mysql2": "^3.11.0",
     "next": "14.2.5",
+    "next-auth": "^4.24.7",
     "react": "^18",
     "react-dom": "^18",
     "react-google-recaptcha": "^3.1.0",
@@ -26,6 +29,7 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

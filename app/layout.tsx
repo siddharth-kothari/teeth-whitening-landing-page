@@ -2,6 +2,7 @@ import "@/app/globals.css";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { HeaderNew } from "@/components/HeaderNew";
+import AuthProvider from "@/utils/AuthProvider";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -18,9 +19,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-[#f9fafb]">
-        <Header />
-        {children}
-        <Footer />
+        <AuthProvider>
+          <Header />
+          {children}
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
   );

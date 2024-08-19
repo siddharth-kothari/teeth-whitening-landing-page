@@ -7,10 +7,12 @@ import mail from "./mail.png";
 import phone from "./phone.png";
 import work1 from "./work1.png";
 import work2 from "./work2.jpg";
-
 import headerLogo from "./header-logo.webp";
+import google_logo from "./google_logo.png";
+import logo from "./logo.png";
 
 export {
+  logo,
   heroImage,
   contactImage,
   loading,
@@ -21,4 +23,5 @@ export {
   work1,
   work2,
   headerLogo,
+  google_logo,
 };
