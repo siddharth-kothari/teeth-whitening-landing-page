@@ -90,7 +90,7 @@ const Login = () => {
             <input
               type="text"
               id="email"
-              className={`w-full  p-3 border text-black text-left bg-inherit !border-[#98bfd3] rounded-lg outline-none ${
+              className={`w-full  p-3 border text-black text-left bg-inherit rounded-lg outline-none ${
                 errors.email ? "border-red-500" : "border-gray-300"
               }`}
               placeholder="Email address"
@@ -106,7 +106,7 @@ const Login = () => {
             <input
               type={showPassword ? "text" : "password"}
               id="password"
-              className={`w-full  p-3 border !border-[#98bfd3] text-black text-left bg-inherit rounded-lg outline-none ${
+              className={`w-full  p-3 border text-black text-left bg-inherit rounded-lg outline-none ${
                 errors.password ? "border-red-500" : "border-gray-300"
               }`}
               placeholder="Password"
@@ -164,7 +164,7 @@ const Login = () => {
 
         <div className="text-center text-sm text-[#4f516e]">
           Don&apos;t have an account?{" "}
-          <Link className="text-[#0070ff]" href="/register">
+          <Link className="text-black font-extrabold" href="/register">
             Sign Up Now.
           </Link>
         </div>

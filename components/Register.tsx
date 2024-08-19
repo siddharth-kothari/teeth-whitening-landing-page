@@ -11,6 +11,7 @@ import bcrypt from "bcryptjs";
 import { logo } from "@/assets";
 import IntlTelInput, { intlTelInput } from "intl-tel-input/react";
 import "intl-tel-input/build/css/intlTelInput.css";
+import Link from "next/link";
 
 const Register: React.FC = () => {
   const [firstname, setFirstName] = useState("");
@@ -205,13 +206,13 @@ const Register: React.FC = () => {
           theme="dark"
         />
       )} */}
-      <section className="w-full p-4 my-5 sm:p-10 md:w-3/4 max-w-2xl mx-auto">
+      <section className="w-full p-4 my-5 sm:p-10 lg:w-3/4 max-w-3xl mx-auto">
         <Image src={logo} alt="pats_logo" className="mx-auto max-w-[100px]" />
         <div className="w-full bg-white rounded-md shadow-lg p-6 sm:py-8 sm:px-5  mt-5">
           <p className="text-black text-center font-abril text-2xl leading-loose">
             Welcome to Dental Care Solution
           </p>
-          <form onSubmit={handleSubmit} className="mt-8">
+          <form onSubmit={handleSubmit} className="mt-8 w-full">
             {/* <div className=" w-fit mx-auto mb-4 items-center">
             <div className="mx-auto relative">
               {profilePicturePreview ? (
@@ -245,7 +246,7 @@ const Register: React.FC = () => {
               />
             </div>
           </div> */}
-            <div className="grid grid-col-1 md:grid-cols-2 md:space-x-3">
+            <div className="block sm:flex sm:space-x-3 w-full">
               <div className="mb-4 w-full">
                 <label
                   htmlFor="first_name"
@@ -292,7 +293,7 @@ const Register: React.FC = () => {
               </div>
             </div>
 
-            <div className="grid grid-col-1 md:grid-cols-2 md:space-x-3">
+            <div className="block sm:flex sm:space-x-3 w-full">
               <div className="mb-4 w-full">
                 <label
                   htmlFor="email"
@@ -345,7 +346,7 @@ const Register: React.FC = () => {
               </div>
             </div>
 
-            <div className="grid grid-col-1 md:grid-cols-2 md:space-x-3">
+            <div className="block sm:flex sm:space-x-3 w-full">
               <div className="mb-4 w-full">
                 <label
                   htmlFor="password"
@@ -421,6 +422,19 @@ const Register: React.FC = () => {
               </div>
             </div>
 
+            <div>
+              <span className="text-sm font-light text-[#4f516e]">
+                By continuing, you agree to Dental Care Solutions'{" "}
+                <Link href="/" className="font-extrabold">
+                  Terms of Service
+                </Link>{" "}
+                &{" "}
+                <Link href="/" className="font-extrabold">
+                  Privacy Policy
+                </Link>
+              </span>
+            </div>
+
             <div className="w-full flex">
               <button
                 type="submit"
@@ -430,6 +444,13 @@ const Register: React.FC = () => {
               </button>
             </div>
           </form>
+
+          <div className="mt-5 text-center text-sm text-[#4f516e]">
+            Already have an account?{" "}
+            <Link className="text-black font-extrabold" href="/login">
+              Sign In.
+            </Link>
+          </div>
         </div>
       </section>
     </>

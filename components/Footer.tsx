@@ -88,6 +88,36 @@ const Footer = () => {
                   Contact Us{" "}
                 </Link>
               </li>
+              <li>
+                <Link
+                  href="/contact-us"
+                  title=""
+                  className="flex text-base text-black transition-all duration-200 hover:font-extrabold"
+                >
+                  {" "}
+                  Book Appointment{" "}
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/contact-us"
+                  title=""
+                  className="flex text-base text-black transition-all duration-200 hover:font-extrabold"
+                >
+                  {" "}
+                  Terms of Service{" "}
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/contact-us"
+                  title=""
+                  className="flex text-base text-black transition-all duration-200 hover:font-extrabold"
+                >
+                  {" "}
+                  Privacy Policy{" "}
+                </Link>
+              </li>
             </ul>
           </div>
 
