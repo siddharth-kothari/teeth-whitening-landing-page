@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { google_logo, logo } from "@/assets";
+import { fb_logo, google_logo, logo } from "@/assets";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Separator } from "@/components/ui/separator";
@@ -148,16 +148,16 @@ const Login = () => {
             }}
             className=" w-full py-3 px-5 bg-black shadow-xl rounded-md flex gap-2 justify-center items-center cursor-pointer"
           >
-            <Image src={google_logo} alt="" className="w-[20px] h-[20px]" />
+            <Image src={google_logo} alt="" className="w-[26px] h-[26px]" />
             <button className="text-white">Google</button>
           </div>
           <div
             onClick={() => {
-              signIn("google");
+              signIn("facebook");
             }}
             className=" w-full py-3 px-5 bg-black shadow-xl rounded-md flex gap-2 justify-center items-center cursor-pointer"
           >
-            <Image src={google_logo} alt="" className="w-[20px] h-[20px]" />
+            <Image src={fb_logo} alt="" className="w-[26px] h-[26px]" />
             <button className="text-white">Facebook</button>
           </div>
         </div>

@@ -10,6 +10,7 @@ import work2 from "./work2.jpg";
 import headerLogo from "./header-logo.webp";
 import google_logo from "./google_logo.png";
 import logo from "./logo.png";
+import fb_logo from "./fb_logo.png";
 
 export {
   logo,
@@ -24,4 +25,5 @@ export {
   work2,
   headerLogo,
   google_logo,
+  fb_logo,
 };
