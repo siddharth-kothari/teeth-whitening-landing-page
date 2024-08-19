@@ -1,6 +1,6 @@
 "use client";
 
-import { headerLogo } from "@/assets";
+import { headerLogo, logo } from "@/assets";
 import { zoomIn } from "@/utils/motion";
 import { motion } from "framer-motion";
 import Image from "next/image";
@@ -15,7 +15,7 @@ const Footer = () => {
       <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
         <div className="grid grid-cols-2 md:col-span-3 lg:grid-cols-6 gap-y-16 gap-x-12">
           <div className="col-span-2 md:col-span-3 lg:col-span-2 lg:pr-8">
-            <Image className="w-auto h-9" src={headerLogo} alt="" />
+            <Image className="w-auto max-w-[100px] mx-auto" src={logo} alt="" />
 
             <p className="text-base leading-relaxed text-gray-600 mt-7">
               Amet minim mollit non deserunt ullamco est sit aliqua dolor do
