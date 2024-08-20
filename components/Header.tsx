@@ -33,7 +33,7 @@ const Header = () => {
     <header className="py-5 sticky top-0 z-10 bg-[#f9fafb]">
       <div className="container px-4 mx-auto sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
-          <div className="flex-shrink-0">
+          <div className="lg:w-1/3">
             <Link href="/" title="home" className="flex rounded outline-none">
               <Image className="w-auto h-8" src={headerLogo} alt="" />
             </Link>
@@ -59,7 +59,7 @@ const Header = () => {
             <HamburgerMenu />
           </div>
 
-          <div className="hidden lg:block">
+          <div className="hidden lg:block w-1/3">
             <NavigationMenu>
               <NavigationMenuList>
                 <NavigationMenuItem>
@@ -98,7 +98,7 @@ const Header = () => {
             </NavigationMenu>
           </div>
 
-          <div className="hidden lg:block">
+          <div className="hidden lg:block w-1/3 text-end">
             {status === "authenticated" && user && (
               <NavigationMenu>
                 <NavigationMenuList>

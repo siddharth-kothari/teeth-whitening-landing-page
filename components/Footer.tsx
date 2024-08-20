@@ -7,9 +7,11 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import { insta, mail, phone, whatsapp } from "@/assets";
+import BookAppointment from "./BookAppointment";
 
 const Footer = () => {
   var year = new Date().getFullYear();
+
   return (
     <section className="border-t py-10 bg-gray-50 sm:pt-16">
       <div className="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
@@ -89,14 +91,7 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/contact-us"
-                  title=""
-                  className="flex text-base text-black transition-all duration-200 hover:font-extrabold"
-                >
-                  {" "}
-                  Book Appointment{" "}
-                </Link>
+                <BookAppointment button_title="Book Appointment" style="text" />
               </li>
               <li>
                 <Link

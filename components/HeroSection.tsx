@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { textVariant, zoomIn, fadeIn } from "@/utils/motion";
+import BookAppointment from "./BookAppointment";
 
 const HeroSection = () => {
   return (
@@ -34,23 +35,10 @@ const HeroSection = () => {
                   Expert Care at Dental Care Solutions - Book Your Appointment
                   Today!
                 </motion.p>
-                <motion.div
-                  variants={textVariant(1)}
-                  whileInView="show"
-                  initial="hidden"
-                  viewport={{ once: true, amount: 0.25 }}
-                  className="flex justify-center"
-                >
-                  <motion.a
-                    variants={zoomIn(0, 0, 1.05)}
-                    whileHover="show"
-                    initial="hidden"
-                    href="tel:+917972659371"
-                    className="inline-flex px-6 py-3 mt-5 text-lg font-bold text-white transition-all duration-200 bg-gray-900 rounded-lg  font-pj"
-                  >
-                    Schedule Your Appointment Now
-                  </motion.a>
-                </motion.div>
+                <BookAppointment
+                  button_title="Schedule Your Appointment Now"
+                  style="button"
+                />
               </div>
             </div>
 
