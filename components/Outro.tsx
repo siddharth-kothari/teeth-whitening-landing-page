@@ -3,6 +3,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { textVariant, zoomIn } from "@/utils/motion";
+import BookAppointment from "./BookAppointment";
 
 const Outro = () => {
   return (
@@ -28,22 +29,10 @@ const Outro = () => {
           Dental Care Solutions. Let us help you achieve the dazzling smile you
           deserve!
         </motion.p>
-        <motion.div
-          variants={textVariant(1)}
-          whileInView="show"
-          initial="hidden"
-          viewport={{ once: true, amount: 0.25 }}
-        >
-          <motion.a
-            variants={zoomIn(0, 0.2, 1.05)}
-            whileHover="show"
-            initial="hidden"
-            href="#contact"
-            className="inline-flex px-6 py-3 mt-5 text-lg font-bold text-white transition-all duration-200 bg-gray-900 rounded-lg  font-pj"
-          >
-            Book Your Appointment Today!
-          </motion.a>
-        </motion.div>
+        <BookAppointment
+          button_title="Book Your Appointment Today!"
+          style="button"
+        />
       </div>
     </section>
   );
