@@ -13,10 +13,11 @@ import {
 import { motion } from "framer-motion";
 import { textVariant, zoomIn } from "@/utils/motion";
 import { Calendar } from "@/components/ui/calendar";
-import { CalendarDays, Clock } from "lucide-react";
+import { CalendarDays, Clock, MessageCircleQuestionIcon } from "lucide-react";
 import { Button } from "./ui/button";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { api } from "@/app/api";
 
 interface TimeSlot {
   time: string;
@@ -32,22 +33,60 @@ const BookAppointment: React.FC<BookAppointmentProps> = ({
   button_title,
   style,
 }) => {
-  const { status } = useSession();
+  const { data: session, status } = useSession();
   const router = useRouter();
   const [open, setOpen] = useState(false);
-  const [date, setDate] = useState<Date | undefined>(new Date());
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(
+    new Date()
+  );
   const [timeSlot, setTimeSlot] = useState<TimeSlot[]>([]);
   const [selectedTimeSlot, setSelectedTimeSlot] = useState<string | null>(null);
+  const [comments, setComments] = useState<string>("");
+  const [disabled, setDisabled] = useState(false);
+  const user_id = session?.user?.id;
 
   useEffect(() => {
     updateTimeSlots();
-  }, [date]);
+  }, [selectedDate]);
 
   const handleOpen = () => {
     if (status === "unauthenticated") {
       router.push("/login");
     } else {
       setOpen(true);
+    }
+  };
+
+  const bookAppointment = async () => {
+    setDisabled(true);
+
+    //const date = new Date(selectedDate);
+    const options: Intl.DateTimeFormatOptions = {
+      weekday: "long", // 'long', 'short', or 'narrow'
+      year: "numeric", // 'numeric' or '2-digit'
+      month: "long", // 'numeric', '2-digit', 'long', 'short', or 'narrow'
+      day: "numeric", // 'numeric' or '2-digit'
+    };
+
+    let date;
+    if (selectedDate != null) {
+      date = new Intl.DateTimeFormat("en-US", options).format(selectedDate);
+    }
+
+    const userData = {
+      date,
+      selectedTimeSlot,
+      comments,
+      user_id,
+    };
+    var body = JSON.stringify(userData);
+    const { data } = await api.post(`/api/book-appointment`, body);
+
+    if (data.status === 200) {
+      setDisabled(false);
+      setOpen(false);
+    } else {
+      setDisabled(false);
     }
   };
 
@@ -62,7 +101,7 @@ const BookAppointment: React.FC<BookAppointmentProps> = ({
       timeList.push({ time: `${hour}:30 ${period}`, isDisabled: false });
     }
 
-    const currentDate = new Date(date!);
+    const currentDate = new Date(selectedDate!);
     currentDate.setHours(0, 0, 0, 0);
     today.setHours(0, 0, 0, 0);
 
@@ -146,8 +185,8 @@ const BookAppointment: React.FC<BookAppointmentProps> = ({
                   </h2>
                   <Calendar
                     mode="single"
-                    selected={date}
-                    onSelect={setDate}
+                    selected={selectedDate}
+                    onSelect={setSelectedDate}
                     className="rounded-md border"
                     disabled={isPastDate}
                   />
@@ -182,6 +221,18 @@ const BookAppointment: React.FC<BookAppointmentProps> = ({
                   </div>
                 </div>
               </div>
+
+              <div className="mt-5">
+                <h2 className="flex gap-2 items-center text-black mb-3">
+                  <MessageCircleQuestionIcon className="w-5 h-5" />
+                  Comments/Questions
+                </h2>
+                <textarea
+                  className="border rounded-lg outline-none focus:ring-transparent p-2 w-full"
+                  rows={5}
+                  onChange={(e) => setComments(e.target.value)}
+                ></textarea>
+              </div>
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className="sm:justify-end mt-2">
@@ -196,7 +247,8 @@ const BookAppointment: React.FC<BookAppointmentProps> = ({
             <Button
               type="button"
               className="text-white bg-black px-6 py-2 rounded-md cursor-pointer hover:bg-black"
-              disabled={!(date && selectedTimeSlot)}
+              disabled={!(selectedDate && selectedTimeSlot) || disabled}
+              onClick={bookAppointment}
             >
               Book
             </Button>
