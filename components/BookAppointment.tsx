@@ -17,7 +17,6 @@ import { CalendarDays, Clock, MessageCircleQuestionIcon } from "lucide-react";
 import { Button } from "./ui/button";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { api } from "@/app/api";
 
 interface TimeSlot {
   time: string;
@@ -46,7 +45,9 @@ const BookAppointment: React.FC<BookAppointmentProps> = ({
   const user_id = session?.user?.id;
 
   useEffect(() => {
-    updateTimeSlots();
+    if (selectedDate) {
+      fetchAppointmentsForDate(selectedDate);
+    }
   }, [selectedDate]);
 
   const handleOpen = () => {
@@ -57,21 +58,46 @@ const BookAppointment: React.FC<BookAppointmentProps> = ({
     }
   };
 
+  const formatDate = (date: Date | undefined) => {
+    const options: Intl.DateTimeFormatOptions = {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    };
+    const formattedDate = selectedDate
+      ? new Intl.DateTimeFormat("en-US", options).format(selectedDate)
+      : "";
+
+    return formattedDate;
+  };
+
+  const fetchAppointmentsForDate = async (date: Date) => {
+    const formattedDate = formatDate(date);
+    try {
+      const res = await fetch(`/api/appointments?date=${formattedDate}`);
+      const appointments = await res.json();
+
+      if (res.ok) {
+        updateTimeSlots(appointments);
+      } else {
+        console.error("Error fetching appointments:", appointments.error);
+      }
+    } catch (error) {
+      console.error("Error fetching appointments:", error);
+    }
+  };
+
   const bookAppointment = async () => {
     setDisabled(true);
 
-    //const date = new Date(selectedDate);
     const options: Intl.DateTimeFormatOptions = {
-      weekday: "long", // 'long', 'short', or 'narrow'
-      year: "numeric", // 'numeric' or '2-digit'
-      month: "long", // 'numeric', '2-digit', 'long', 'short', or 'narrow'
-      day: "numeric", // 'numeric' or '2-digit'
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
     };
-
-    let date;
-    if (selectedDate != null) {
-      date = new Intl.DateTimeFormat("en-US", options).format(selectedDate);
-    }
+    const date = formatDate(selectedDate);
 
     const userData = {
       date,
@@ -79,21 +105,29 @@ const BookAppointment: React.FC<BookAppointmentProps> = ({
       comments,
       user_id,
     };
-    var body = JSON.stringify(userData);
-    const { data } = await api.post(`/api/book-appointment`, body);
+    const body = JSON.stringify(userData);
+    const res = await fetch(`/api/book-appointment`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body,
+    });
 
-    if (data.status === 200) {
+    if (res.ok) {
       setDisabled(false);
       setOpen(false);
     } else {
       setDisabled(false);
+      console.error("Error booking appointment");
     }
   };
 
-  const updateTimeSlots = () => {
+  const updateTimeSlots = (appointments: any[]) => {
     const timeList: TimeSlot[] = [];
     const today = new Date();
 
+    // Generate time slots
     for (let i = 10; i <= 19; i++) {
       const hour = i > 12 ? i - 12 : i;
       const period = i >= 12 ? "PM" : "AM";
@@ -101,33 +135,48 @@ const BookAppointment: React.FC<BookAppointmentProps> = ({
       timeList.push({ time: `${hour}:30 ${period}`, isDisabled: false });
     }
 
+    // Extract booked time slots
+    const bookedSlots = appointments.map(
+      (appointment) => appointment.appointment_time
+    );
+
     const currentDate = new Date(selectedDate!);
     currentDate.setHours(0, 0, 0, 0);
     today.setHours(0, 0, 0, 0);
 
-    if (currentDate.getTime() === today.getTime()) {
-      const currentHour = new Date().getHours();
-      const currentMinutes = new Date().getMinutes();
+    // Get current time
+    const currentHour = new Date().getHours();
+    const currentMinutes = new Date().getMinutes();
 
-      timeList.forEach((slot, index) => {
-        const [slotHourStr, slotMinutesStr] = slot.time.split(/[: ]/);
-        const slotHour = parseInt(slotHourStr, 10);
-        const slotMinutes = parseInt(slotMinutesStr, 10) || 0;
-        const isPM = slot.time.includes("PM");
+    // Disable slots that are booked or past
+    timeList.forEach((slot, index) => {
+      const [slotHourStr, slotMinutesStr] = slot.time.split(/[: ]/);
+      const slotHour = parseInt(slotHourStr, 10);
+      const slotMinutes = parseInt(slotMinutesStr, 10) || 0;
+      const isPM = slot.time.includes("PM");
 
-        let adjustedHour = slotHour;
-        if (isPM && slotHour !== 12) adjustedHour += 12;
-        if (!isPM && slotHour === 12) adjustedHour = 0;
+      // Convert slot time to 24-hour format
+      let adjustedHour = slotHour;
+      if (isPM && slotHour !== 12) adjustedHour += 12;
+      if (!isPM && slotHour === 12) adjustedHour = 0;
 
+      // Disable if slot is booked
+      if (bookedSlots.includes(slot.time)) {
+        timeList[index].isDisabled = true;
+      }
+
+      // Disable if slot is in the past (only for today's date)
+      if (currentDate.getTime() === today.getTime()) {
         if (
           adjustedHour < currentHour ||
-          (adjustedHour === currentHour && slotMinutes <= currentMinutes)
+          (adjustedHour === currentHour && slotMinutes < currentMinutes)
         ) {
           timeList[index].isDisabled = true;
         }
-      });
-    }
+      }
+    });
 
+    // Update state with the new time slots
     setTimeSlot(timeList);
   };
 
@@ -201,10 +250,10 @@ const BookAppointment: React.FC<BookAppointmentProps> = ({
                     {timeSlot &&
                       timeSlot.map((item, idx) => (
                         <h2
-                          className={`p-2 text-center border rounded-full cursor-pointer ${
+                          className={`p-2 text-center border rounded-full  ${
                             item.isDisabled
                               ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-                              : "hover:bg-black hover:text-white"
+                              : "hover:bg-black hover:text-white cursor-pointer"
                           } ${
                             item.time === selectedTimeSlot &&
                             !item.isDisabled &&
