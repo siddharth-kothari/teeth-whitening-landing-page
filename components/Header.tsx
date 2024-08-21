@@ -98,9 +98,9 @@ const Header = () => {
             </NavigationMenu>
           </div>
 
-          <div className="hidden lg:block w-1/3 text-end">
+          <div className="hidden lg:block w-1/3 ">
             {status === "authenticated" && user && (
-              <NavigationMenu>
+              <NavigationMenu className="m-0 ml-auto">
                 <NavigationMenuList>
                   <NavigationMenuItem>
                     <NavigationMenuTrigger>Hi, {name[0]}</NavigationMenuTrigger>
@@ -109,11 +109,11 @@ const Header = () => {
                         <ListItem
                           key="My Appointments"
                           title="My Appointments"
-                          href="/my-appointments"
+                          href="/profile/my-appointments"
                         ></ListItem>
                         <div
                           onClick={() => signOut()}
-                          className="text-sm font-medium leading-none block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground cursor-pointer"
+                          className="text-sm font-medium block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground cursor-pointer"
                         >
                           Log Out
                         </div>
@@ -124,7 +124,7 @@ const Header = () => {
               </NavigationMenu>
             )}
             {!user && (
-              <div className="hidden lg:block">
+              <div className="hidden lg:block text-end">
                 <Link href="/login" className="mr-2">
                   Sign In
                 </Link>

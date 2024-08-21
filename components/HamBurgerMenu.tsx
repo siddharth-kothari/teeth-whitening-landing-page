@@ -78,7 +78,7 @@ const HamburgerMenu: React.FC = () => {
           {status == "authenticated" && user && (
             <>
               <Link
-                href={`/profile/${user?.name}`}
+                href={`/profile/my-appointments`}
                 className="cursor-pointer block px-4 py-2 text-sm hover:font-bold text-black"
               >
                 My Appointments
