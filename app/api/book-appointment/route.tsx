@@ -36,14 +36,51 @@ export const POST = async (req: Request) => {
       data: [data.user_id],
     });
 
-    console.log("result", result.insertId);
-    console.log("user", user.first_name);
-
     if (result.insertId) {
+      // Fetch the ICS file content from the generate-ics API
+      const icsRequestData = {
+        date: data.date,
+        selectedTimeSlot: data.selectedTimeSlot,
+        comments: data.comments,
+        user_id: data.user_id,
+      };
+
+      let icsContent: string | null = null;
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_URL}/api/generate-ics`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(icsRequestData),
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch ICS content");
+        }
+
+        icsContent = await response.text();
+      } catch (error) {
+        console.error("Error fetching ICS content:", error);
+        return NextResponse.json(
+          { error: "Failed to fetch ICS content" },
+          { status: 500 }
+        );
+      }
+
       await resend.emails.send({
         from: "Dental Care Solutions <Dental-Care-Solutions@dcs-test.siddharthkothari.com>",
         to: session.user.email,
         subject: "Appointment Confirmation at Dental Care Solutions",
+        attachments: [
+          {
+            filename: "appointment.ics",
+            content: icsContent,
+          },
+        ],
         react: (
           <BookAppointmentEmail
             userFirstname={user.first_name}
