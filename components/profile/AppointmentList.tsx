@@ -1,3 +1,4 @@
+import { CalendarDays, Clock } from "lucide-react";
 import React from "react";
 
 const AppointmentList = ({ aptData }: any) => {
@@ -7,7 +8,8 @@ const AppointmentList = ({ aptData }: any) => {
         aptData.map((data: any, idx: number) => (
           <div key={idx} className="border rounded-lg p-5">
             <div className="flex items-center justify-between">
-              <h2 className="text-xl font-semibold text-gray-800">
+              <h2 className="text-xl font-semibold flex gap-2 items-center text-gray-800">
+                <CalendarDays className="w-5 h-5" />
                 {data.appointment_date}
               </h2>
               <span
@@ -22,7 +24,8 @@ const AppointmentList = ({ aptData }: any) => {
                 {data.status}
               </span>
             </div>
-            <p className="text-lg text-gray-600 mt-2">
+            <p className="text-lg flex gap-2 items-center text-gray-600 mt-2">
+              <Clock className="w-5 h-5" />
               {data.appointment_time}
             </p>
           </div>
