@@ -12,6 +12,16 @@ import { logo } from "@/assets";
 import IntlTelInput, { intlTelInput } from "intl-tel-input/react";
 import "intl-tel-input/build/css/intlTelInput.css";
 import Link from "next/link";
+import { Slide, ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+const errorMap = [
+  "Invalid number",
+  "Invalid country code",
+  "Too short",
+  "Too long",
+  "Invalid number",
+];
 
 const Register: React.FC = () => {
   const [firstname, setFirstName] = useState("");
@@ -24,6 +34,8 @@ const Register: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [errors, setErrors] = useState<Errors>({});
+  const [isValid, setIsValid] = useState<boolean | null>(null);
+  const [errorCode, setErrorCode] = useState<number | null>(null);
   const router = useRouter();
 
   interface Errors {
@@ -72,100 +84,90 @@ const Register: React.FC = () => {
       return;
     }
 
-    try {
-      //var filename;
+    //var filename;
 
-      // if (profilePicture) {
-      //   const checksum = await computeSHA256(profilePicture);
-      //   filename = `${Date.now()}_${profilePicture?.name.replaceAll(" ", "_")}`;
-      //   const signedURLResult = await getSignedURL(
-      //     "register",
-      //     "users",
-      //     filename,
-      //     profilePicture?.type,
-      //     profilePicture?.size,
-      //     checksum
-      //   );
+    // if (profilePicture) {
+    //   const checksum = await computeSHA256(profilePicture);
+    //   filename = `${Date.now()}_${profilePicture?.name.replaceAll(" ", "_")}`;
+    //   const signedURLResult = await getSignedURL(
+    //     "register",
+    //     "users",
+    //     filename,
+    //     profilePicture?.type,
+    //     profilePicture?.size,
+    //     checksum
+    //   );
 
-      //   if (signedURLResult.failure !== undefined) {
-      //     console.error(signedURLResult.failure);
-      //     alert(signedURLResult.failure);
-      //     return;
-      //   }
+    //   if (signedURLResult.failure !== undefined) {
+    //     console.error(signedURLResult.failure);
+    //     alert(signedURLResult.failure);
+    //     return;
+    //   }
 
-      //   const url = signedURLResult.success.url;
-      //   var response;
-      //   response = await fetch(url, {
-      //     method: "PUT",
-      //     headers: {
-      //       "Content-Type": profilePicture.type,
-      //     },
-      //     body: profilePicture,
-      //   });
-      // }
-
-      const hashedPass = await bcrypt.hash(password, 5);
-      //if (typeof response === "undefined" || response?.status == 200) {
-      const userData = {
-        firstname,
-        lastname,
-        email,
-        password: hashedPass,
-        mobileno,
-      };
-      var body = JSON.stringify(userData);
-      const { data } = await api.post(`/api/register`, body);
-
-      if (data.status === 201) {
-        const loginres = await LoginHelper({
+    //   const url = signedURLResult.success.url;
+    //   var response;
+    //   response = await fetch(url, {
+    //     method: "PUT",
+    //     headers: {
+    //       "Content-Type": profilePicture.type,
+    //     },
+    //     body: profilePicture,
+    //   });
+    // }
+    if (isValid) {
+      try {
+        const hashedPass = await bcrypt.hash(password, 5);
+        //if (typeof response === "undefined" || response?.status == 200) {
+        const userData = {
+          firstname,
+          lastname,
           email,
-          password,
-        });
-        if (loginres && loginres.ok) {
-          setFirstName("");
-          setLastName("");
-          setEmail("");
-          setPassword("");
-          setConfirmPassword("");
-          setErrors({});
-          router.push("/");
+          password: hashedPass,
+          mobileno,
+        };
+        var body = JSON.stringify(userData);
+        const { data } = await api.post(`/api/register`, body);
+
+        if (data.status === 201) {
+          const loginres = await LoginHelper({
+            email,
+            password,
+          });
+          if (loginres && loginres.ok) {
+            setFirstName("");
+            setLastName("");
+            setEmail("");
+            setPassword("");
+            setConfirmPassword("");
+            setErrors({});
+            router.push("/");
+          }
         }
-      } else {
-        // setShowToast(true);
-        // toast.error(data.message, {
-        //   position: "top-center",
-        //   autoClose: 5000,
-        //   hideProgressBar: false,
-        //   closeOnClick: true,
-        //   pauseOnHover: true,
-        //   draggable: true,
-        //   progress: undefined,
-        //   theme: "dark",
-        // });
-      }
-      // } else {
-      //   alert(response?.status + " " + response?.statusText);
-      // }
-    } catch (error: any) {
-      if (axios.isAxiosError(error)) {
-        if (error.response) {
-          // Server responded with a status other than 2xx
-          alert(
-            `Message: ${error.response.data.message || error.response.data}`
-          );
-        } else if (error.request) {
-          // No response was received
-          alert("No response received from server.");
+        // } else {
+        //   alert(response?.status + " " + response?.statusText);
+        // }
+      } catch (error: any) {
+        if (axios.isAxiosError(error)) {
+          if (error.response) {
+            const message = error.response.data.message || error.response.data;
+            validationErrors.email = message;
+            setErrors(validationErrors);
+          } else if (error.request) {
+            alert("No response received from server.");
+          } else {
+            alert(`Error setting up request: ${error.message}`);
+          }
         } else {
-          // Something went wrong setting up the request
-          alert(`Error setting up request: ${error.message}`);
+          alert(`Unexpected error: ${error.message}`);
         }
-      } else {
-        // Handle other errors
-        alert(`Unexpected error: ${error.message}`);
+        console.error(error.message);
       }
-      console.error(error.message);
+    } else {
+      const errorMessage = errorMap[errorCode || 0] || "Invalid number";
+      validationErrors.mobileno = errorMessage;
+      setErrors(validationErrors);
     }
+
     // Reset the form fields and errors
   };
 
@@ -191,29 +193,14 @@ const Register: React.FC = () => {
   };
 
   return (
-    <>
-      {/* {showtoast && (
-        <ToastContainer
-          position="top-center"
-          autoClose={2000}
-          hideProgressBar={false}
-          newestOnTop
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="dark"
-        />
-      )} */}
-      <section className="w-full p-4 my-5 sm:p-10 lg:w-3/4 max-w-3xl mx-auto">
-        <Image src={logo} alt="pats_logo" className="mx-auto max-w-[100px]" />
-        <div className="w-full bg-white rounded-md shadow-lg p-6 sm:py-8 sm:px-5  mt-5">
-          <p className="text-black text-center font-abril text-2xl leading-loose">
-            Welcome to Dental Care Solution
-          </p>
-          <form onSubmit={handleSubmit} className="mt-8 w-full">
-            {/* <div className=" w-fit mx-auto mb-4 items-center">
+    <section className="w-full p-4 my-5 sm:p-10 lg:w-3/4 max-w-3xl mx-auto">
+      <Image src={logo} alt="pats_logo" className="mx-auto max-w-[100px]" />
+      <div className="w-full bg-white rounded-md shadow-lg p-6 sm:py-8 sm:px-5  mt-5">
+        <p className="text-black text-center font-abril text-2xl leading-loose">
+          Welcome to Dental Care Solution
+        </p>
+        <form onSubmit={handleSubmit} className="mt-8 w-full">
+          {/* <div className=" w-fit mx-auto mb-4 items-center">
             <div className="mx-auto relative">
               {profilePicturePreview ? (
                 <img
@@ -246,214 +233,213 @@ const Register: React.FC = () => {
               />
             </div>
           </div> */}
-            <div className="block sm:flex sm:space-x-3 w-full">
-              <div className="mb-4 w-full">
-                <label
-                  htmlFor="first_name"
-                  className="block text-black text-sm font-medium mb-2"
-                >
-                  First Name
-                </label>
-                <input
-                  type="text"
-                  id="first_name"
-                  className={`w-full px-3 py-2 border bg-inherit text-black rounded-md outline-none ${
-                    errors.firstname ? "border-red-500" : "border-gray-300"
-                  }`}
-                  placeholder="Enter first name"
-                  value={firstname}
-                  onChange={(e) => setFirstName(e.target.value)}
-                />
-                {errors.firstname && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {errors.firstname}
-                  </p>
-                )}
-              </div>
-              <div className="mb-4 w-full">
-                <label
-                  htmlFor="lastname"
-                  className="block text-black text-sm font-medium mb-2"
-                >
-                  Last Name
-                </label>
-                <input
-                  type="text"
-                  id="lastname"
-                  className={`w-full px-3 py-2 border bg-inherit text-black rounded-md outline-none ${
-                    errors.lastname ? "border-red-500" : "border-gray-300"
-                  }`}
-                  placeholder="Enter your lastname"
-                  value={lastname}
-                  onChange={(e) => setLastName(e.target.value)}
-                />
-                {errors.lastname && (
-                  <p className="text-red-500 text-sm mt-1">{errors.lastname}</p>
-                )}
-              </div>
-            </div>
-
-            <div className="block sm:flex sm:space-x-3 w-full">
-              <div className="mb-4 w-full">
-                <label
-                  htmlFor="email"
-                  className="block text-black text-sm font-medium mb-2"
-                >
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  className={`w-full px-3 py-2 border bg-inherit text-black rounded-md outline-none ${
-                    errors.email ? "border-red-500" : "border-gray-300"
-                  }`}
-                  placeholder="Enter your email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-                {errors.email && (
-                  <p className="text-red-500 text-sm mt-1">{errors.email}</p>
-                )}
-              </div>
-              <div className="mb-4 w-full">
-                <label
-                  htmlFor="mobileno"
-                  className="block text-black text-sm font-medium mb-2"
-                >
-                  Mobile Number
-                </label>
-                <div
-                  className={`w-full px-3 py-2 border bg-inherit text-black rounded-md outline-none ${
-                    errors.mobileno ? "border-red-500" : "border-gray-300"
-                  }`}
-                >
-                  <IntlTelInput
-                    onChangeNumber={setMobileNo}
-                    onChangeCountry={setCountry}
-                    inputProps={{
-                      className: "bg-transparent outline-none ring-transparent",
-                    }}
-                    initOptions={{
-                      initialCountry: "in",
-                      utilsScript:
-                        "https://cdn.jsdelivr.net/npm/intl-tel-input@23.8.1/build/js/utils.js",
-                    }}
-                  />
-                </div>
-                {errors.mobileno && (
-                  <p className="text-red-500 text-sm mt-1">{errors.mobileno}</p>
-                )}
-              </div>
-            </div>
-
-            <div className="block sm:flex sm:space-x-3 w-full">
-              <div className="mb-4 w-full">
-                <label
-                  htmlFor="password"
-                  className="block text-black text-sm font-medium mb-2"
-                >
-                  Password
-                </label>
-                <div className="relative">
-                  <input
-                    type={showPassword ? "text" : "password"}
-                    id="password"
-                    className={`w-full px-3 py-2 border bg-inherit text-black rounded-md outline-none ${
-                      errors.password ? "border-red-500" : "border-gray-300"
-                    }`}
-                    placeholder="Enter your password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                  <button
-                    type="button"
-                    className="absolute top-[30%] right-2 focus:outline-none"
-                    onClick={togglePasswordVisibility}
-                  >
-                    {showPassword ? (
-                      <EyeIcon className="h-5 w-5 text-black" />
-                    ) : (
-                      <EyeSlashIcon className="h-5 w-5 text-black" />
-                    )}
-                  </button>
-                </div>
-                {errors.password && (
-                  <p className="text-red-500 text-sm mt-1">{errors.password}</p>
-                )}
-              </div>
-              <div className="mb-4 w-full">
-                <label
-                  htmlFor="confirmPassword"
-                  className="block text-black text-sm font-medium mb-2"
-                >
-                  Confirm Password
-                </label>
-                <div className="relative">
-                  <input
-                    type={showConfirmPassword ? "text" : "password"}
-                    id="confirmPassword"
-                    className={`w-full px-3 py-2 border bg-inherit text-black rounded-md outline-none ${
-                      errors.confirmPassword
-                        ? "border-red-500"
-                        : "border-gray-300"
-                    }`}
-                    placeholder="Confirm your password"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                  />
-                  <button
-                    type="button"
-                    className="absolute top-[30%] right-2 focus:outline-none"
-                    onClick={toggleConfirmPasswordVisibility}
-                  >
-                    {showConfirmPassword ? (
-                      <EyeIcon className="h-5 w-5 text-black" />
-                    ) : (
-                      <EyeSlashIcon className="h-5 w-5 text-black" />
-                    )}
-                  </button>
-                </div>
-
-                {errors.confirmPassword && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {errors.confirmPassword}
-                  </p>
-                )}
-              </div>
-            </div>
-
-            <div>
-              <span className="text-sm font-light text-[#4f516e]">
-                By continuing, you agree to Dental Care Solutions'{" "}
-                <Link href="/" className="font-extrabold">
-                  Terms of Service
-                </Link>{" "}
-                &{" "}
-                <Link href="/" className="font-extrabold">
-                  Privacy Policy
-                </Link>
-              </span>
-            </div>
-
-            <div className="w-full flex">
-              <button
-                type="submit"
-                className="w-[40%] mx-auto bg-black text-white py-2 px-4 rounded-md focus:outline-none mt-4"
+          <div className="block sm:flex sm:space-x-3 w-full">
+            <div className="mb-4 w-full">
+              <label
+                htmlFor="first_name"
+                className="block text-black text-sm font-medium mb-2"
               >
-                Register
-              </button>
+                First Name
+              </label>
+              <input
+                type="text"
+                id="first_name"
+                className={`w-full px-3 py-2 border bg-inherit text-black rounded-md outline-none ${
+                  errors.firstname ? "border-red-500" : "border-gray-300"
+                }`}
+                placeholder="Enter first name"
+                value={firstname}
+                onChange={(e) => setFirstName(e.target.value)}
+              />
+              {errors.firstname && (
+                <p className="text-red-500 text-sm mt-1">{errors.firstname}</p>
+              )}
             </div>
-          </form>
-
-          <div className="mt-5 text-center text-sm text-[#4f516e]">
-            Already have an account?{" "}
-            <Link className="text-black font-extrabold" href="/login">
-              Sign In.
-            </Link>
+            <div className="mb-4 w-full">
+              <label
+                htmlFor="lastname"
+                className="block text-black text-sm font-medium mb-2"
+              >
+                Last Name
+              </label>
+              <input
+                type="text"
+                id="lastname"
+                className={`w-full px-3 py-2 border bg-inherit text-black rounded-md outline-none ${
+                  errors.lastname ? "border-red-500" : "border-gray-300"
+                }`}
+                placeholder="Enter your lastname"
+                value={lastname}
+                onChange={(e) => setLastName(e.target.value)}
+              />
+              {errors.lastname && (
+                <p className="text-red-500 text-sm mt-1">{errors.lastname}</p>
+              )}
+            </div>
           </div>
+
+          <div className="block sm:flex sm:space-x-3 w-full">
+            <div className="mb-4 w-full">
+              <label
+                htmlFor="email"
+                className="block text-black text-sm font-medium mb-2"
+              >
+                Email
+              </label>
+              <input
+                type="email"
+                id="email"
+                className={`w-full px-3 py-2 border bg-inherit text-black rounded-md outline-none ${
+                  errors.email ? "border-red-500" : "border-gray-300"
+                }`}
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              {errors.email && (
+                <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+              )}
+            </div>
+            <div className="mb-4 w-full">
+              <label
+                htmlFor="mobileno"
+                className="block text-black text-sm font-medium mb-2"
+              >
+                Mobile Number
+              </label>
+              <div
+                className={`w-full px-3 py-2 border bg-inherit text-black rounded-md outline-none ${
+                  errors.mobileno ? "border-red-500" : "border-gray-300"
+                }`}
+              >
+                <IntlTelInput
+                  onChangeNumber={setMobileNo}
+                  onChangeCountry={setCountry}
+                  onChangeValidity={setIsValid}
+                  onChangeErrorCode={setErrorCode}
+                  inputProps={{
+                    className: "bg-transparent outline-none ring-transparent",
+                  }}
+                  initOptions={{
+                    initialCountry: "in",
+                    utilsScript:
+                      "https://cdn.jsdelivr.net/npm/intl-tel-input@23.8.1/build/js/utils.js",
+                  }}
+                />
+              </div>
+              {errors.mobileno && (
+                <p className="text-red-500 text-sm mt-1">{errors.mobileno}</p>
+              )}
+            </div>
+          </div>
+
+          <div className="block sm:flex sm:space-x-3 w-full">
+            <div className="mb-4 w-full">
+              <label
+                htmlFor="password"
+                className="block text-black text-sm font-medium mb-2"
+              >
+                Password
+              </label>
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  id="password"
+                  className={`w-full px-3 py-2 border bg-inherit text-black rounded-md outline-none ${
+                    errors.password ? "border-red-500" : "border-gray-300"
+                  }`}
+                  placeholder="Enter your password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <button
+                  type="button"
+                  className="absolute top-[30%] right-2 focus:outline-none"
+                  onClick={togglePasswordVisibility}
+                >
+                  {showPassword ? (
+                    <EyeIcon className="h-5 w-5 text-black" />
+                  ) : (
+                    <EyeSlashIcon className="h-5 w-5 text-black" />
+                  )}
+                </button>
+              </div>
+              {errors.password && (
+                <p className="text-red-500 text-sm mt-1">{errors.password}</p>
+              )}
+            </div>
+            <div className="mb-4 w-full">
+              <label
+                htmlFor="confirmPassword"
+                className="block text-black text-sm font-medium mb-2"
+              >
+                Confirm Password
+              </label>
+              <div className="relative">
+                <input
+                  type={showConfirmPassword ? "text" : "password"}
+                  id="confirmPassword"
+                  className={`w-full px-3 py-2 border bg-inherit text-black rounded-md outline-none ${
+                    errors.confirmPassword
+                      ? "border-red-500"
+                      : "border-gray-300"
+                  }`}
+                  placeholder="Confirm your password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                />
+                <button
+                  type="button"
+                  className="absolute top-[30%] right-2 focus:outline-none"
+                  onClick={toggleConfirmPasswordVisibility}
+                >
+                  {showConfirmPassword ? (
+                    <EyeIcon className="h-5 w-5 text-black" />
+                  ) : (
+                    <EyeSlashIcon className="h-5 w-5 text-black" />
+                  )}
+                </button>
+              </div>
+
+              {errors.confirmPassword && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.confirmPassword}
+                </p>
+              )}
+            </div>
+          </div>
+
+          <div>
+            <span className="text-sm font-light text-[#4f516e]">
+              By continuing, you agree to Dental Care Solutions'{" "}
+              <Link href="/" className="font-extrabold">
+                Terms of Service
+              </Link>{" "}
+              &{" "}
+              <Link href="/" className="font-extrabold">
+                Privacy Policy
+              </Link>
+            </span>
+          </div>
+
+          <div className="w-full flex">
+            <button
+              type="submit"
+              className="w-[40%] mx-auto bg-black text-white py-2 px-4 rounded-md focus:outline-none mt-4"
+            >
+              Register
+            </button>
+          </div>
+        </form>
+
+        <div className="mt-5 text-center text-sm text-[#4f516e]">
+          Already have an account?{" "}
+          <Link className="text-black font-extrabold" href="/login">
+            Sign In.
+          </Link>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 };
 

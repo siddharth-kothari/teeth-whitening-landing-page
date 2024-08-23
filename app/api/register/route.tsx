@@ -32,7 +32,7 @@ export const POST = async (req: Request) => {
       );
     } else {
       return NextResponse.json(
-        { message: "User already exists", status: 500 },
+        { message: "Email already exists", status: 500 },
         { status: 500 }
       );
     }

@@ -21,6 +21,7 @@ const Login = () => {
   const [errors, setErrors] = useState<Errors>({});
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const { status } = useSession();
 
@@ -52,6 +53,8 @@ const Login = () => {
       password,
     });
 
+    console.log(loginres);
+
     //setShowToast(true);
     if (loginres && loginres.ok) {
       setEmail("");
@@ -59,18 +62,8 @@ const Login = () => {
       setErrors({});
       router.push("/");
     } else {
-      // toast.error("Invalid Email or Password", {
-      //   position: "top-center",
-      //   autoClose: 5000,
-      //   hideProgressBar: false,
-      //   closeOnClick: true,
-      //   pauseOnHover: true,
-      //   draggable: true,
-      //   progress: undefined,
-      //   theme: "light",
-      // });
+      setErrorMessage("Invalid Email or Password");
     }
-    // Reset the form fields and errors
   };
 
   const toggleShowPassword = () => {
@@ -128,6 +121,9 @@ const Login = () => {
               <p className="text-red-500 text-sm mt-1">{errors.password}</p>
             )}
           </div>
+          <p className="text-red-500 text-sm mb-6 font-semibold">
+            {errorMessage}
+          </p>
           <button
             type="submit"
             className="w-full mx-auto bg-[black] rounded-lg text-white py-2 px-4 outline-none button"
