@@ -20,7 +20,7 @@ const signInCallback: (
     return true;
   }
 
-  if (account?.provider == "google") {
+  if (account?.provider == "google" || account?.provider == "facebook") {
     try {
       const name = user.name?.split(" ") ?? "User";
       const results = await query({
@@ -31,8 +31,8 @@ const signInCallback: (
       if (results.length == 0) {
         const newUser = await query({
           query:
-            "INSERT INTO users(first_name, last_name, email, provider) VALUES(?, ?, ?, ?)",
-          data: [name[0], name[1], user.email, "google"],
+            "INSERT INTO users(first_name, last_name, email, provider, is_verified) VALUES(?, ?, ?, ?, ?)",
+          data: [name[0], name[1], user.email, "google", 1],
         });
 
         return true;
@@ -48,28 +48,29 @@ const signInCallback: (
 
 const callbacks = {
   signIn: signInCallback,
+  async jwt({ token, user }: any) {
+    if (user) {
+      // Add user info to the token when they sign in
+      token.id = user.id;
+      token.email = user.email;
+      token.isVerified = user.isVerified ?? 0; // Default to 0 if not present
+    }
+    return token;
+  },
   async session({ session }: any) {
     try {
-      //console.log("session", session);
       const results = await query({
         query:
           "SELECT id, first_name FROM users WHERE email = ? AND is_deleted != 1",
         data: [session.user.email],
       });
       const data = results[0];
-
+      session.user.isVerified = 1;
       session.user.name = data.first_name;
       session.user.id = data.id;
     } catch (error) {
-      console.log(error);
+      console.error("Error in session callback:", error);
     }
-    // console.log(session);
-    // const acessToken = jwt.sign(
-    //   { id: data.id, email: data.email, name: data.name },
-    //   process.env.NEXTAUTH_SECRET || "yourFallbackSecret",
-    //   { expiresIn: "30d" }
-    // );
-
     return session;
   },
   // Add other callbacks as needed
@@ -107,7 +108,10 @@ export const options: NextAuthOptions = {
             );
 
             if (isPasswordCorrect) {
-              return user;
+              return {
+                ...user,
+                isVerified: user.is_verified || 0, // Ensure isVerified is included
+              };
             } else {
               return null;
             }
