@@ -55,7 +55,8 @@ const callbacks = {
       // Add user info to the token when they sign in
       token.id = user.id;
       token.email = user.email;
-      token.isVerified = user.isVerified ?? 0; // Default to 0 if not present
+      token.isVerified =
+        account.provider == "google" || account.provider == "facebook" ? 1 : 0; // Default to 0 if not present
     }
     return token;
   },
