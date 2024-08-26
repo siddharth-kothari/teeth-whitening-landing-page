@@ -48,8 +48,9 @@ const signInCallback: (
 
 const callbacks = {
   signIn: signInCallback,
-  async jwt({ token, user }: any) {
+  async jwt({ token, user, account }: any) {
     console.log("userrrr", user);
+    console.log("accountttttt", account);
     if (user) {
       // Add user info to the token when they sign in
       token.id = user.id;
