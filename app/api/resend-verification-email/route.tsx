@@ -16,7 +16,7 @@ export async function POST(request: Request) {
   try {
     // Find the user by email
     const findUserQuery = `
-      SELECT id, isVerified, verificationTokenExpires 
+      SELECT id, is_verified, verification_token_expires 
       FROM users 
       WHERE email = ? 
       LIMIT 1
@@ -54,7 +54,7 @@ export async function POST(request: Request) {
       // Update the user with the new token and expiry
       const updateUserQuery = `
         UPDATE users 
-        SET verificationToken = ?, verificationTokenExpires = ? 
+        SET verification_token = ?, verification_token_expires = ? 
         WHERE id = ?
       `;
       await query({

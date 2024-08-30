@@ -56,6 +56,9 @@ export default function VerifyEmail() {
         email,
       });
       setMessage(response.data.message);
+      setTimeout(() => {
+        router.push("/");
+      }, 3000);
     } catch (error: any) {
       setMessage(
         error.response?.data?.message || "Failed to resend verification email."

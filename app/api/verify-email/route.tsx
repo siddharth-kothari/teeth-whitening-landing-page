@@ -45,7 +45,7 @@ export async function GET(request: Request) {
     // Update the user to mark them as verified and clear the token
     const updateUserQuery = `
       UPDATE users 
-      SET isVerified = 1, verificationToken = NULL, verificationTokenExpires = NULL 
+      SET is_verified = 1, verification_token = NULL, verification_token_expires = NULL 
       WHERE id = ?
     `;
     await query({ query: updateUserQuery, data: [user.id] });
