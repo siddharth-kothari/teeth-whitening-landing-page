@@ -66,7 +66,7 @@ const callbacks = {
         data: [session.user.email],
       });
       const data = results[0];
-      session.user.isVerified = 1;
+      session.user.isVerified = data.is_verified;
       session.user.name = data.first_name;
       session.user.id = data.id;
     } catch (error) {

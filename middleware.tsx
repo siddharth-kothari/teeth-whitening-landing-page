@@ -5,8 +5,8 @@ import { getToken } from "next-auth/jwt";
 
 export default async function middleware(req: NextRequest, res: NextResponse) {
   const path = req.nextUrl.pathname;
-
-  const jwtToken = await getToken({ req });
+  const secret = process.env.NEXTAUTH_SECRET;
+  const jwtToken = await getToken({ req, secret });
   console.log("jwtToken", jwtToken);
   if (jwtToken && jwtToken?.isVerified === 0) {
     if (path !== "/verify-email") {
