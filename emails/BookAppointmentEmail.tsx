@@ -37,15 +37,8 @@ export const BookAppointmentEmail = ({
     </Preview>
     <Body style={main}>
       <Container style={container}>
-        <Image
+        <Img
           src={logo_img}
-          width="100"
-          height="100"
-          alt="Dental Care Solutions"
-          style={logo}
-        />
-        <Image
-          src={headerLogo}
           width="100"
           height="100"
           alt="Dental Care Solutions"
