@@ -12,6 +12,7 @@ export default function VerifyEmail() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [msgColor, setMsgColor] = useState<string | null>(null);
+  const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchEmailAndVerify = async () => {
@@ -26,7 +27,7 @@ export default function VerifyEmail() {
       }
 
       const token = searchParams.get("token");
-
+      setToken(searchParams.get("token"));
       try {
         const response = await axios.get(`/api/verify-email?token=${token}`);
         setMessage(response.data.message);
@@ -65,7 +66,7 @@ export default function VerifyEmail() {
   return (
     <div className="max-w-md mx-auto p-4 text-left bg-white shadow-md rounded-lg my-[10%]">
       <h2 className="text-2xl font-bold mb-4">Thank you for signing up!</h2>
-      {message ? (
+      {message && token ? (
         <p>{message}</p>
       ) : (
         <p className="text-left">

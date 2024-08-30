@@ -3,7 +3,7 @@ import { query } from "@/config/db";
 import { getServerSession } from "next-auth";
 import { options as authOptions } from "../auth/[...nextauth]/options";
 import { Resend } from "resend";
-import { BookAppointmentEmail } from "@/emails/index";
+import { BookAppointmentEmail } from "@/emails/BookAppointmentEmail";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
