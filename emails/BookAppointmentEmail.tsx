@@ -27,8 +27,12 @@ const baseUrl = process.env.NEXT_PUBLIC_PROD_URL
 const logo_img = baseUrl + "logo.png";
 
 const fs = require("fs");
+import path from "path";
 
-const imageBase64 = fs.readFileSync(logo_img, "base64");
+// Adjust this to point to your public folder path correctly
+const imagePath = path.join(process.cwd(), "public", "logo.png");
+
+const imageBase64 = fs.readFileSync(imagePath, "base64");
 
 export const BookAppointmentEmail = ({
   userFirstname,
