@@ -19,19 +19,21 @@ interface RaycastMagicLinkEmailProps {
 }
 
 const baseUrl = process.env.NEXT_PUBLIC_PROD_URL
-  ? `https://${process.env.NEXT_PUBLIC_PROD_URL}`
+  ? `${process.env.NEXT_PUBLIC_PROD_URL}`
   : "http://localhost:3000";
+
+const logo_img = baseUrl + "logo.png";
 
 export const EmailVerification = ({
   magicLink,
 }: RaycastMagicLinkEmailProps) => (
   <Html>
     <Head />
-    <Preview>Log in with this magic link.</Preview>
+    <Preview>Click on verify button to confirm your email.</Preview>
     <Body style={main}>
       <Container style={container}>
         <Img
-          src={`${baseUrl}/logo.png`}
+          src={logo_img}
           width="100"
           height="100"
           alt="Dental Care Solutions"
@@ -65,16 +67,14 @@ export default EmailVerification;
 
 const main = {
   backgroundColor: "#ffffff",
+  margin: "0 auto",
   fontFamily:
-    '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif',
+    "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif",
 };
 
 const container = {
   margin: "0 auto",
-  padding: "20px 25px 48px",
-  backgroundImage: 'url("/assets/raycast-bg.png")',
-  backgroundPosition: "bottom",
-  backgroundRepeat: "no-repeat, no-repeat",
+  padding: "0px 20px",
 };
 
 const heading = {

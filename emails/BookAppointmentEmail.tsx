@@ -31,7 +31,8 @@ export const BookAppointmentEmail = ({
   <Html>
     <Head />
     <Preview>
-      The sales intelligence platform that helps you uncover qualified leads.
+      Appointment with Dental Care Solutions at {apt_data.selectedTimeSlot} on{" "}
+      {apt_data.date}.
     </Preview>
     <Body style={main}>
       <Container style={container}>
