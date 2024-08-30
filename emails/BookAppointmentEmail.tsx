@@ -1,3 +1,4 @@
+import { headerLogo } from "@/assets";
 import {
   Body,
   Button,
@@ -11,6 +12,7 @@ import {
   Section,
   Text,
 } from "@react-email/components";
+import Image from "next/image";
 import * as React from "react";
 
 interface KoalaWelcomeEmailProps {
@@ -21,6 +23,8 @@ interface KoalaWelcomeEmailProps {
 const baseUrl = process.env.NEXT_PUBLIC_PROD_URL
   ? `https://${process.env.NEXT_PUBLIC_PROD_URL}`
   : "http://localhost:3000";
+
+const logo_img = baseUrl + "logo.png";
 
 export const BookAppointmentEmail = ({
   userFirstname,
@@ -33,8 +37,15 @@ export const BookAppointmentEmail = ({
     </Preview>
     <Body style={main}>
       <Container style={container}>
-        <Img
-          src={`${baseUrl}/logo.png`}
+        <Image
+          src={logo_img}
+          width="100"
+          height="100"
+          alt="Dental Care Solutions"
+          style={logo}
+        />
+        <Image
+          src={headerLogo}
           width="100"
           height="100"
           alt="Dental Care Solutions"
