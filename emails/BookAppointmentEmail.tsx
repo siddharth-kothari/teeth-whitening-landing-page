@@ -21,7 +21,7 @@ interface KoalaWelcomeEmailProps {
 }
 
 const baseUrl = process.env.NEXT_PUBLIC_PROD_URL
-  ? `https://${process.env.NEXT_PUBLIC_PROD_URL}`
+  ? `${process.env.NEXT_PUBLIC_PROD_URL}`
   : "http://localhost:3000";
 
 const logo_img = baseUrl + "logo.png";
