@@ -26,6 +26,10 @@ const baseUrl = process.env.NEXT_PUBLIC_PROD_URL
 
 const logo_img = baseUrl + "logo.png";
 
+const fs = require("fs");
+
+const imageBase64 = fs.readFileSync(logo_img, "base64");
+
 export const BookAppointmentEmail = ({
   userFirstname,
   apt_data,
@@ -38,7 +42,7 @@ export const BookAppointmentEmail = ({
     <Body style={main}>
       <Container style={container}>
         <Img
-          src={logo_img}
+          src={`data:image/png;base64,${imageBase64}`}
           width="100"
           height="100"
           alt="Dental Care Solutions"
