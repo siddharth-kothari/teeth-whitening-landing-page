@@ -1,4 +1,3 @@
-import { headerLogo } from "@/assets";
 import {
   Body,
   Button,
@@ -12,7 +11,6 @@ import {
   Section,
   Text,
 } from "@react-email/components";
-import Image from "next/image";
 import * as React from "react";
 
 interface KoalaWelcomeEmailProps {
@@ -26,14 +24,6 @@ const baseUrl = process.env.NEXT_PUBLIC_PROD_URL
 
 const logo_img = baseUrl + "logo.png";
 
-const fs = require("fs");
-import path from "path";
-
-// Adjust this to point to your public folder path correctly
-const imagePath = path.join(process.cwd(), "public", "logo.png");
-
-const imageBase64 = fs.readFileSync(imagePath, "base64");
-
 export const BookAppointmentEmail = ({
   userFirstname,
   apt_data,
@@ -46,7 +36,7 @@ export const BookAppointmentEmail = ({
     <Body style={main}>
       <Container style={container}>
         <Img
-          src={`data:image/png;base64,${imageBase64}`}
+          src={logo_img}
           width="100"
           height="100"
           alt="Dental Care Solutions"
