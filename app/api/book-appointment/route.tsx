@@ -58,6 +58,8 @@ export const POST = async (req: Request) => {
           }
         );
 
+        console.log("res.ics", response);
+
         if (!response.ok) {
           throw new Error("Failed to fetch ICS content");
         }
