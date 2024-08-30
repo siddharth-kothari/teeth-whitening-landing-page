@@ -7,7 +7,7 @@ export default async function middleware(req: NextRequest, res: NextResponse) {
   const path = req.nextUrl.pathname;
 
   const jwtToken = await getToken({ req });
-
+  console.log("jwtToken", jwtToken);
   if (jwtToken && jwtToken?.isVerified === 0) {
     if (path !== "/verify-email") {
       return NextResponse.redirect(new URL("/verify-email", req.nextUrl));
