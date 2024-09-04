@@ -44,7 +44,7 @@ const HamburgerMenu: React.FC = () => {
       </button>
       {isOpen && (
         <div
-          className="absolute z-10 right-0 top-[20px] py-2 hover:font-bold text-black origin-top-center mt-1.5 w-48
+          className="absolute z-10 right-0 top-[20px] py-2 text-black origin-top-center mt-1.5 w-48
           overflow-hidden rounded-md border bg-popover text-popover-foreground
           shadow-lg"
         >
