@@ -1,6 +1,7 @@
 import heroImage from "./General-Female-6.webp";
 import contactImage from "./General-Female-1.webp";
 import loading from "./loading.gif";
+import loading1 from "./loading1.gif";
 import insta from "./insta.png";
 import whatsapp from "./whatsapp.png";
 import mail from "./mail.png";
@@ -13,6 +14,7 @@ import logo from "./logo.png";
 import fb_logo from "./fb_logo.png";
 
 export {
+  loading1,
   logo,
   heroImage,
   contactImage,

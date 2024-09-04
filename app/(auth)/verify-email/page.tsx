@@ -1,9 +1,10 @@
+import Loading from "@/components/Loading";
 import VerifyEmail from "@/components/VerifyEmail";
 import React, { Suspense } from "react";
 
 const VerifyEmailPage = () => {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<Loading />}>
       <VerifyEmail />
     </Suspense>
   );
